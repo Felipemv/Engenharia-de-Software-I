@@ -7,4 +7,20 @@ package es.inatel.br.apphelp;
 public class Administrador extends Usuario {
     private String ocupacao;
     private String atividadeResponsavel;
+
+    public String getOcupacao() {
+        return ocupacao;
+    }
+
+    public void setOcupacao(String ocupacao) {
+        this.ocupacao = ocupacao;
+    }
+
+    public String getAtividadeResponsavel() {
+        return atividadeResponsavel;
+    }
+
+    public void setAtividadeResponsavel(String atividadeResponsavel) {
+        this.atividadeResponsavel = atividadeResponsavel;
+    }
 }
