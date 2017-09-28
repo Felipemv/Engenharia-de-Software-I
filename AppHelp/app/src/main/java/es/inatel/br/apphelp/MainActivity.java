@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.w3c.dom.Text;
 
 
@@ -41,6 +44,15 @@ public class MainActivity extends AppCompatActivity {
         botaoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // Write a message to the database
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("teste");
+
+                myRef.setValue("Testando");
+
+                Intent intentAbrirTelaCadastro = new Intent(MainActivity.this, PlanejamentoActivity.class);
+                startActivity(intentAbrirTelaCadastro);
                 if(usuario.equals("")){
                     loginErrado.setVisibility(View.VISIBLE);
                 }else{

@@ -57,6 +57,7 @@ public class CadastroActivity extends AppCompatActivity {
                     }else{
                         usuario = new Aluno();
                     }
+
                     usuario.setNomeCompleto(nomeCompleto.getText().toString());
                     usuario.setEmail(email.getText().toString());
                     usuario.setTelefoneContato(telefoneContato.getText().toString());
