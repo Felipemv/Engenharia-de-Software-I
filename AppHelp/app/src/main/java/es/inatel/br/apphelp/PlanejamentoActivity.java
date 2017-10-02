@@ -23,7 +23,7 @@ public class PlanejamentoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new BancoDeDados().logout();
-                Intent intentAbrirTelaCadastro = new Intent(PlanejamentoActivity.this, MainActivity.class);
+                Intent intentAbrirTelaCadastro = new Intent(PlanejamentoActivity.this, LoginActivity.class);
                 startActivity(intentAbrirTelaCadastro);
             }
         });

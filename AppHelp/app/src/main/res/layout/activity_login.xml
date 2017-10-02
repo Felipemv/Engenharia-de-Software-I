@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="es.inatel.br.apphelp.CadastroActivity">
+    tools:context="es.inatel.br.apphelp.LoginActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,12 +19,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cadastro"
+                android:text="Login"
                 android:textAlignment="center"
                 android:textSize="40sp" />
 
             <EditText
-                android:id="@+id/emailCadastroID"
+                android:id="@+id/emailLoginID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
@@ -32,23 +32,15 @@
                 android:inputType="textEmailAddress" />
 
             <EditText
-                android:id="@+id/senhaCadastroID"
+                android:id="@+id/senhaLoginID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:hint="Senha"
                 android:inputType="textPassword" />
 
-            <EditText
-                android:id="@+id/confirmarSenhaCadastroID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:hint="Confirmar Senha"
-                android:inputType="textPassword" />
-
             <TextView
-                android:id="@+id/erroCadastroID"
+                android:id="@+id/erroLoginID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -58,7 +50,6 @@
                 android:visibility="invisible" />
 
             <RadioGroup
-                android:id="@+id/group"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,14 +57,14 @@
                 android:layout_margin="20dp">
 
                 <RadioButton
-                    android:id="@+id/radioAlunoCadastroID"
+                    android:id="@+id/radioAlunoLoginID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Aluno"
                     android:layout_margin="5dp"/>
 
                 <RadioButton
-                    android:id="@+id/radioAdmCadastroID"
+                    android:id="@+id/radioAdmLoginID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Administrador"
@@ -82,16 +73,27 @@
             </RadioGroup>
 
             <Button
-                android:id="@+id/botaoCadastrarID"
+                android:id="@+id/botaoLoginID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginBottom="20dp"
-                android:text="Cadastrar" />
+                android:layout_marginTop="20dp"
+                android:text="Login" />
 
-
+            <TextView
+                android:id="@+id/botaoCadastrarLoginID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="15dp"
+                android:text="Não sou cadastrado"
+                android:textAlignment="center"
+                android:textSize="18sp"/>
         </LinearLayout>
     </ScrollView>
 
