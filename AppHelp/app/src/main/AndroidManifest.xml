@@ -17,10 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CadastroActivity" />
-        <activity android:name=".PlanejamentoActivity" />
-        <activity android:name=".CadastroAlunos" />
-        <activity android:name=".CadastroAdminActivity" />
-        <activity android:name=".AdicionarAtividadeActivity"></activity>
+        <activity android:name=".MenuPrincipalActivity" />
+        <activity android:name=".CriarAtividade"></activity>
     </application>
 
 </manifest>

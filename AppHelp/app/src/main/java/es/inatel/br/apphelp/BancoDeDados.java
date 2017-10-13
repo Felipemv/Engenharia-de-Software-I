@@ -11,6 +11,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.concurrent.Executor;
 
@@ -26,9 +28,15 @@ public class BancoDeDados{
 
 
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseDatabase dataBase;
+    private DatabaseReference user;
 
-    public void cadastro(String email, String senha){
+    public void cadastro(Usuario usuario, String id, String tipoUsuario){
+
+        dataBase = FirebaseDatabase.getInstance();
+        user = dataBase.getReference("Usuarios/"+tipoUsuario);
+
+        user.child(id).setValue(usuario);
 
     }
 
@@ -36,5 +44,6 @@ public class BancoDeDados{
     }
 
     public void logout() {
+        mAuth.signOut();
     }
 }
