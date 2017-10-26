@@ -3,7 +3,7 @@ package es.inatel.br.apphelp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class CriarAtividade extends AppCompatActivity {
+public class CriarAtividadeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

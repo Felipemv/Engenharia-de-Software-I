@@ -119,7 +119,7 @@ public class CadastroActivity extends AppCompatActivity{
                         aluno.setPeriodo(Integer.parseInt(periodo.getText().toString()));
                         aluno.setMatricula(Integer.parseInt(matricula.getText().toString()));
 
-                        new BancoDeDados().cadastro(aluno, mAuth.getCurrentUser().getUid(), tipoUsuario);
+                        //new BancoDeDados().cadastro(aluno, mAuth.getCurrentUser().getUid(), tipoUsuario);
                     }else{
                         Administrador adm = new Administrador();
 
@@ -130,7 +130,7 @@ public class CadastroActivity extends AppCompatActivity{
                         adm.setOcupacao(ocupacao.getText().toString());
                         adm.setAtividadeResponsavel(atividadeResponsavel.getText().toString());
 
-                        new BancoDeDados().cadastro(adm, mAuth.getCurrentUser().getUid(), tipoUsuario);
+                        //new BancoDeDados().cadastro(adm, mAuth.getCurrentUser().getUid(), tipoUsuario);
                     }
                     Toast.makeText(CadastroActivity.this, "Cadastrado com sucesso", Toast.LENGTH_LONG).show();
                 }else{

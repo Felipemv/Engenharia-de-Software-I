@@ -2,6 +2,7 @@ package es.inatel.br.apphelp;
 
 import android.content.Intent;
 import android.media.Image;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
@@ -31,19 +32,12 @@ public class BancoDeDados{
     private FirebaseDatabase dataBase;
     private DatabaseReference user;
 
-    public void cadastro(Usuario usuario, String id, String tipoUsuario){
+    public DatabaseReference conexao(String caminho){
 
         dataBase = FirebaseDatabase.getInstance();
-        user = dataBase.getReference("Usuarios/"+tipoUsuario);
-
-        user.child(id).setValue(usuario);
-
+        user = dataBase.getReference(caminho);
+        return user;
     }
 
-    public void login(){
-    }
 
-    public void logout() {
-        mAuth.signOut();
-    }
 }

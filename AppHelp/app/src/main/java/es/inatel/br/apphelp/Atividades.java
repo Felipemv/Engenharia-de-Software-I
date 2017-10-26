@@ -4,14 +4,30 @@ package es.inatel.br.apphelp;
  * Created by felipe on 27/09/17.
  */
 
-public class Atividade {
+public class Atividades {
 
+    private String inicio;
+    private String fim;
     private String tipo;
     private String nome;
     private String tempo_mensal;
     private int numero_de_alunos;
-    private Horario horario;
-    private String codigo_disciplina;
+
+    public String getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(String inicio) {
+        this.inicio = inicio;
+    }
+
+    public String getFim() {
+        return fim;
+    }
+
+    public void setFim(String fim) {
+        this.fim = fim;
+    }
 
     public String getTipo() {
         return tipo;
@@ -43,21 +59,5 @@ public class Atividade {
 
     public void setNumero_de_alunos(int numero_de_alunos) {
         this.numero_de_alunos = numero_de_alunos;
-    }
-
-    public Horario getHorario() {
-        return horario;
-    }
-
-    public void setHorario(Horario horario) {
-        this.horario = horario;
-    }
-
-    public String getCodigo_disciplina() {
-        return codigo_disciplina;
-    }
-
-    public void setCodigo_disciplina(String codigo_disciplina) {
-        this.codigo_disciplina = codigo_disciplina;
     }
 }
