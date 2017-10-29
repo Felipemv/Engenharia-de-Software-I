@@ -8,4 +8,5 @@
     <dimen name="cabecalho">40sp</dimen>
     <dimen name="largura_foto_perfil">140dp</dimen>
     <dimen name="altura_foto_perfil">120dp</dimen>
+    <dimen name="editText">25sp</dimen>
 </resources>

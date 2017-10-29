@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="es.inatel.br.apphelp.control.PerfilActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="vertical">
+
+                    <!--Cabecalho da tela-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="20dp">
+
+
+                        <ImageView
+                            android:layout_width="@dimen/largura_foto_perfil"
+                            android:layout_height="@dimen/altura_foto_perfil"
+                            android:src="@drawable/boneco_perfil" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Perfil"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/cabecalho"
+                            android:gravity="center"/>
+                    </LinearLayout>
+
+                    <!-- Componentes principais da tela -->
+                    <EditText
+                        android:id="@+id/nomePerfilID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:hint="Nome"
+                        android:textSize="@dimen/editText"
+                        android:inputType="textPersonName"
+                        android:enabled="false"/>
+
+                    <EditText
+                        android:id="@+id/emailPerfilID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:hint="Email"
+                        android:textSize="@dimen/editText"
+                        android:inputType="textEmailAddress"
+                        android:enabled="false"/>
+
+                    <EditText
+                        android:id="@+id/telefonePerfilID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:hint="Telefone para contato"
+                        android:textSize="@dimen/editText"
+                        android:inputType="phone"
+                        android:enabled="false"/>
+
+                    <!--Componentes especificos de usuario-->
+                    <LinearLayout
+                        android:id="@+id/telaUsuarioID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!--View Cadastro Alunos-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <EditText
+                                android:id="@+id/cursoPerfilID"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="15dp"
+                                android:hint="@string/curso"
+                                android:textSize="@dimen/editText"
+                                android:inputType="textPersonName"
+                                android:visibility="gone"
+                                android:enabled="false"/>
+
+                            <EditText
+                                android:id="@+id/periodoPerfilID"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="15dp"
+                                android:hint="@string/periodo"
+                                android:textSize="@dimen/editText"
+                                android:inputType="textPersonName"
+                                android:visibility="gone"
+                                android:enabled="false"/>
+
+                            <EditText
+                                android:id="@+id/matriculaPerfilID"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="15dp"
+                                android:hint="@string/matricula"
+                                android:textSize="@dimen/editText"
+                                android:inputType="textPersonName"
+                                android:visibility="gone"
+                                android:enabled="false"/>
+                        </LinearLayout>
+
+                        <!--View Cadastro Administrador-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <EditText
+                                android:id="@+id/ocupacaoID"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="15dp"
+                                android:hint="@string/ocupacao"
+                                android:textSize="@dimen/editText"
+                                android:inputType="textPersonName"
+                                android:visibility="gone"
+                                android:enabled="false"/>
+
+                            <EditText
+                                android:id="@+id/atividadeRespID"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="15dp"
+                                android:hint="@string/resp"
+                                android:textSize="@dimen/editText"
+                                android:inputType="textPersonName"
+                                android:visibility="gone"
+                                android:enabled="false"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/erroCadastroID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/holo_red_light"
+                        android:visibility="invisible"/>
+                </LinearLayout>
+
+                <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/botaoVoltarID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/voltar"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <Button
+                        android:id="@+id/botaoEditarID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/editar"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/botaoSalvarID"
+                        app:layout_constraintStart_toEndOf="@+id/botaoVoltarID" />
+
+                    <Button
+                        android:id="@+id/botaoSalvarID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/salvar"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+                    </android.support.constraint.ConstraintLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

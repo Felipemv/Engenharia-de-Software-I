@@ -1,32 +1,29 @@
-package es.inatel.br.apphelp;
+package es.inatel.br.apphelp.control;
 
-import android.app.ProgressDialog;
-import android.support.annotation.NonNull;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewSwitcher;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.nio.file.Files;
-import java.util.concurrent.Delayed;
+import es.inatel.br.apphelp.R;
+import es.inatel.br.apphelp.model.Administrador;
+import es.inatel.br.apphelp.model.AdministradorDAO;
+import es.inatel.br.apphelp.model.Aluno;
+import es.inatel.br.apphelp.model.AlunoDAO;
+import es.inatel.br.apphelp.model.Usuario;
+import es.inatel.br.apphelp.model.UsuarioDAO;
 
 public class CadastroActivity extends AppCompatActivity{
 
@@ -55,6 +52,7 @@ public class CadastroActivity extends AppCompatActivity{
     private FirebaseAuth mAuth;
     private FirebaseDatabase dataBase;
     private DatabaseReference user;
+    FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +62,9 @@ public class CadastroActivity extends AppCompatActivity{
         referenciaComponentes();
         adicionarListeners();
         teste();
-
     }
 
-    public void cadastrarUsuario(final String email, final String senha, final String confirmarSenha){
+    public boolean cadastrarUsuario(final String email, final String senha, final String confirmarSenha){
 
 
         if(emailCadastro.getText().toString().trim().length() == 0
@@ -76,14 +73,14 @@ public class CadastroActivity extends AppCompatActivity{
 
             erroCadastro.setText("Os campos obrigatórios não foram preenchidos");
             erroCadastro.setVisibility(View.VISIBLE);
-            return;
+            return false;
 
         }
 
         if(!senha.equals(confirmarSenha)){
             erroCadastro.setText("As senhas precisam ser iguais");
             erroCadastro.setVisibility(View.VISIBLE);
-            return;
+            return false;
 
         }
 
@@ -92,7 +89,7 @@ public class CadastroActivity extends AppCompatActivity{
 
             if(!radioAluno.isChecked()){
                 erroCadastro.setText("Tipo de usuário não selecionado ");
-                return;
+                return false;
             }else{
                 tipoUsuario = "Aluno";
             }
@@ -100,44 +97,42 @@ public class CadastroActivity extends AppCompatActivity{
             tipoUsuario = "Administrador";
         }
 
-        mAuth = FirebaseAuth.getInstance();
 
-        mAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(CadastroActivity.this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
 
-                    Usuario usuario;
-                    if(tipoUsuario.equals("Aluno")){
-                        Aluno aluno = new Aluno();
+        if(tipoUsuario.equals("Aluno")){
+            Aluno aluno = new Aluno();
 
-                        aluno.setEmail(email);
-                        aluno.setSenha(senha);
-                        aluno.setNomeCompleto(nome.getText().toString());
-                        aluno.setTelefoneContato(telefone.getText().toString());
-                        aluno.setCurso(curso.getText().toString());
-                        aluno.setPeriodo(Integer.parseInt(periodo.getText().toString()));
-                        aluno.setMatricula(Integer.parseInt(matricula.getText().toString()));
+            aluno.setEmail(email);
+            aluno.setNomeCompleto(nome.getText().toString());
+            aluno.setTelefoneContato(telefone.getText().toString());
+            aluno.setCurso(curso.getText().toString());
+            aluno.setPeriodo(Integer.parseInt(periodo.getText().toString()));
+            aluno.setMatricula(Integer.parseInt(matricula.getText().toString()));
 
-                        //new BancoDeDados().cadastro(aluno, mAuth.getCurrentUser().getUid(), tipoUsuario);
-                    }else{
-                        Administrador adm = new Administrador();
+            mAuth = FirebaseAuth.getInstance();
+            mAuth.signOut();
 
-                        adm.setEmail(email);
-                        adm.setSenha(senha);
-                        adm.setNomeCompleto(nome.getText().toString());
-                        adm.setTelefoneContato(telefone.getText().toString());
-                        adm.setOcupacao(ocupacao.getText().toString());
-                        adm.setAtividadeResponsavel(atividadeResponsavel.getText().toString());
+            firebaseUser = new UsuarioDAO(aluno).cadastroUsuario();
+        }else{
+            Administrador adm = new Administrador();
 
-                        //new BancoDeDados().cadastro(adm, mAuth.getCurrentUser().getUid(), tipoUsuario);
-                    }
-                    Toast.makeText(CadastroActivity.this, "Cadastrado com sucesso", Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(CadastroActivity.this, "Falha ao cadastrar usuario", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+            adm.setEmail(email);
+            adm.setNomeCompleto(nome.getText().toString());
+            adm.setTelefoneContato(telefone.getText().toString());
+            adm.setOcupacao(ocupacao.getText().toString());
+            adm.setAtividadeResponsavel(atividadeResponsavel.getText().toString());
+
+            firebaseUser = new UsuarioDAO(adm).cadastroUsuario();
+        }
+
+        if(firebaseUser != null){
+            Toast.makeText(CadastroActivity.this, "Cadastrado com sucesso!", Toast.LENGTH_LONG).show();
+            return true;
+        }
+
+//        firebaseUser.delete();
+        Toast.makeText(CadastroActivity.this, "Erro ao cadastrar usuário!", Toast.LENGTH_LONG).show();
+        return false;
     }
 
     public void referenciaComponentes(){
@@ -174,7 +169,11 @@ public class CadastroActivity extends AppCompatActivity{
                 String senha = senhaCadastro.getText().toString();
                 String confirmarSenha = confirmarSenhaCadastro.getText().toString();
 
-                cadastrarUsuario(email, senha, confirmarSenha);
+                if(cadastrarUsuario(email, senha, confirmarSenha)){
+                    Intent proximaTela = new Intent(CadastroActivity.this, LoginActivity.class);
+                    startActivity(proximaTela);
+                    finish();
+                }
             }
         });
 
@@ -221,7 +220,7 @@ public class CadastroActivity extends AppCompatActivity{
 
     private void teste(){
         nome.setText("Felipe");
-        emailCadastro.setText("felipevitor@gec.inatel.br");
+        emailCadastro.setText("felipe.martinsvitor@gmail.com");
         senhaCadastro.setText("felipe");
         confirmarSenhaCadastro.setText("felipe");
         telefone.setText("123");

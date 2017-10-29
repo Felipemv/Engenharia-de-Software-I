@@ -6,4 +6,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="title_activity_perfil">Perfil</string>
+    <string name="curso">Curso</string>
+    <string name="periodo">Período</string>
+    <string name="matricula">Matrícula</string>
+    <string name="ocupacao">Ocupação</string>
+    <string name="resp">Atividade de sua responsabilidade</string>
+    <string name="voltar">Voltar</string>
+    <string name="editar">Editar</string>
+    <string name="salvar">Salvar</string>
 </resources>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="es.inatel.br.apphelp.MenuPrincipalActivity">
+    tools:context="es.inatel.br.apphelp.control.MenuPrincipalActivity">
 
     <ScrollView
         android:layout_width="368dp"
@@ -50,7 +50,7 @@
                         android:id="@+id/logoID"
                         android:layout_width="140dp"
                         android:layout_height="140dp"
-                        android:src="@drawable/ic_menu_gallery"
+                        android:src="@drawable/logo"
                         android:layout_gravity="right"/>
                 </LinearLayout>
 
@@ -61,6 +61,7 @@
                 android:layout_width="match_parent"/>
 
             <Button
+                android:id="@+id/menuPerfilID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Perfil"
@@ -70,15 +71,17 @@
                 android:layout_marginBottom="20dp"/>
 
             <Button
+                android:id="@+id/menuHorarioID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Aulas"
+                android:text="Horários"
                 android:layout_gravity="center"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
                 android:layout_marginBottom="20dp"/>
 
             <Button
+                android:id="@+id/menuAtividadeID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Atividades"
@@ -88,6 +91,7 @@
                 android:layout_marginBottom="20dp"/>
 
             <Button
+                android:id="@+id/menuSairID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Sair"

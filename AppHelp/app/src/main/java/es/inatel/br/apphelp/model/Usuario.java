@@ -1,4 +1,4 @@
-package es.inatel.br.apphelp;
+package es.inatel.br.apphelp.model;
 
 /**
  * Created by felipe on 23/09/17.

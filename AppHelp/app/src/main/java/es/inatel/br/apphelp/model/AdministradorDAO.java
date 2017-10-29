@@ -1,7 +1,6 @@
-package es.inatel.br.apphelp;
+package es.inatel.br.apphelp.model;
 
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -11,6 +10,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+
+import es.inatel.br.apphelp.control.CadastroActivity;
 
 /**
  * Created by felipe on 25/10/17.
@@ -27,26 +28,25 @@ public class AdministradorDAO {
         this.tela = telaCadastro;
     }
 
-    public boolean cadastroAdm(Administrador adm){
+    public FirebaseAuth cadastroAdm(Administrador adm){
+
+        mAuth = FirebaseAuth.getInstance();
 
         mAuth.createUserWithEmailAndPassword(adm.getEmail(), adm.getSenha()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(tela, "Usuário criado com sucesso", Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(tela, "Falha ao cadastrar usuário", Toast.LENGTH_LONG).show();
+                if(!task.isSuccessful()){
                     mAuth.signOut();
                 }
             }
         });
 
+        if (mAuth.getCurrentUser() == null) return mAuth;
+
         DatabaseReference user = new BancoDeDados().conexao(CAMINHO);
         user.child(mAuth.getCurrentUser().getUid()).setValue(adm);
 
-        if(mAuth.getCurrentUser() == null) return false;
-        else                               return true;
-
+        return mAuth;
     }
 
     public Administrador visualizarPerfilAdm(String uId){

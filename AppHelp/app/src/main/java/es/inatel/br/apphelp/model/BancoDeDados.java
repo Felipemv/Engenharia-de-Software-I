@@ -1,4 +1,4 @@
-package es.inatel.br.apphelp;
+package es.inatel.br.apphelp.model;
 
 import android.content.Intent;
 import android.media.Image;
