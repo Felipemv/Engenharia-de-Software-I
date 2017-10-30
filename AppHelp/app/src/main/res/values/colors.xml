@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorEditText">#000</color>
+
+    <color name="cabecalho_listView">#6699CC</color>
+    <color name="divider">#66CCFF </color>
+    <color name="background_listView">#F5F5F5</color>
+    <color name="hora">#F0F8FF</color>
 </resources>

@@ -113,6 +113,8 @@ public class PerfilActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                botaoSalvar.setText("Salvar");
+
                 editar = true;
 
                 nome.setEnabled(true);
@@ -166,6 +168,12 @@ public class PerfilActivity extends AppCompatActivity {
                         Toast.makeText(PerfilActivity.this, "Erro ao editar perfil!", Toast.LENGTH_LONG).show();
                     }
 
+                }else{
+                    Intent proximaPagina = new Intent(PerfilActivity.this, MenuPrincipalActivity.class);
+                    proximaPagina.putExtra("tipoUsuario", tipoUsuario);
+
+                    startActivity(proximaPagina);
+                    finish();
                 }
             }
         });

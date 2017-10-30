@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="es.inatel.br.apphelp.control.HorariosActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/fotoID"
+                        android:layout_width="140dp"
+                        android:layout_height="120dp"
+                        android:src="@drawable/boneco_perfil"/>
+
+                    <TextView
+                        android:layout_width="140dp"
+                        android:layout_height="wrap_content"
+                        android:text="Nome: "
+                        android:textSize="18sp"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Horários"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/cabecalho"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <Button
+                    android:id="@+id/criarHorarioID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/criar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/editarHorarioID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/editar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/excluirHorarioID"
+                    app:layout_constraintStart_toEndOf="@+id/criarHorarioID"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/excluirHorarioID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/excluir"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+
+                <TextView
+                    android:text="@string/segunda_feira"
+                    style="@style/textViewHorario"/>
+
+                <ListView
+                    android:id="@+id/listSegundaID"
+                    style="@style/listViewHorario"
+                    android:layout_height="match_parent">
+                </ListView>
+
+                <TextView
+                    android:text="@string/terca_feira"
+                    style="@style/textViewHorario"/>
+
+                <ListView
+                    android:id="@+id/listTercaID"
+                    style="@style/listViewHorario">
+                </ListView>
+
+                <TextView
+                    style="@style/textViewHorario"
+                    android:text="@string/quarta_feira"/>
+
+                <ListView
+                    android:id="@+id/listQuartaID"
+                    style="@style/listViewHorario">
+                </ListView>
+
+                <TextView
+                    style="@style/textViewHorario"
+                    android:text="@string/quinta_feira"/>
+
+                <ListView
+                    android:id="@+id/listQuintaID"
+                    style="@style/listViewHorario">
+                </ListView>
+
+                <TextView
+                    style="@style/textViewHorario"
+                    android:text="@string/sexta_feira"/>
+
+                <ListView
+                    android:id="@+id/listSextaID"
+                    style="@style/listViewHorario">
+                </ListView>
+
+                <TextView
+                    style="@style/textViewHorario"
+                    android:text="@string/sabado"/>
+
+                <ListView
+                    android:id="@+id/listSabadoID"
+                    style="@style/listViewHorario">
+                </ListView>
+
+        </LinearLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

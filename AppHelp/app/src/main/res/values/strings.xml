@@ -15,4 +15,19 @@
     <string name="voltar">Voltar</string>
     <string name="editar">Editar</string>
     <string name="salvar">Salvar</string>
+    <string name="continuar">continuar</string>
+    <string name="criar">criar</string>
+    <string name="dia_da_semana">Dia da semana</string>
+    <string name="tipo">Tipo</string>
+    <string name="nome_do_hor_rio">Nome do Horário</string>
+    <string name="horario">Horário</string>
+    <string name="local">Local</string>
+    <string name="c_digo">Código</string>
+    <string name="segunda_feira">Segunda-Feira</string>
+    <string name="terca_feira">Terça-Feira</string>
+    <string name="quarta_feira">Quarta-Feira</string>
+    <string name="sabado">Sábado</string>
+    <string name="sexta_feira">Sexta-Feira</string>
+    <string name="quinta_feira">Quinta-Feira</string>
+    <string name="excluir">Excluir</string>
 </resources>

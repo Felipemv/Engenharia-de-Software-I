@@ -1,5 +1,6 @@
 package es.inatel.br.apphelp.control;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -48,6 +49,8 @@ public class LoginActivity extends AppCompatActivity{
     private FirebaseUser fbUser;
     private DatabaseReference user;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +61,7 @@ public class LoginActivity extends AppCompatActivity{
         teste();
     }
 
-    public void login(String email, String senha){
+    public void login(String email, String senha) throws InterruptedException {
         if(radioAluno.isChecked())  tipoUsuario = "Aluno";
         else                        tipoUsuario = "Administrador";
 
@@ -132,6 +135,7 @@ public class LoginActivity extends AppCompatActivity{
         botaoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog = ProgressDialog.show(LoginActivity.this, "AppHelp", "Logando...");
                 int validacao = validaEntrada();
 
                 if(validacao == 0){
@@ -141,16 +145,21 @@ public class LoginActivity extends AppCompatActivity{
                 }else if (validacao == -1){
                     erroLogin.setText("Tipo de usuário não selecionado");
                 }else {
-                    login(emailLogin.getText().toString(), senhaLogin.getText().toString());
+                    try {
+                        login(emailLogin.getText().toString(), senhaLogin.getText().toString());
+                        progressDialog.dismiss();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
     }
 
     public void teste(){
-        emailLogin.setText("felipemartinsv97@gmail.com");
+        emailLogin.setText("felipe.martinsvitor@gmail.com");
         senhaLogin.setText("felipe");
-        //radioAluno.setChecked(true);
+        radioAluno.setChecked(true);
 
         //emailLogin.setFocusable(false);
         //senhaLogin.setFocusable(false);

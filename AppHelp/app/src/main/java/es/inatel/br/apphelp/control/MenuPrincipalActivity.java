@@ -57,9 +57,10 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         menuHorario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Intent proximaTela = new Intent(MenuPrincipalActivity.this, HorarioActivity.class);
-                //startActivity(proximaTela);
-                //finish();
+                Intent proximaTela = new Intent(MenuPrincipalActivity.this, HorariosActivity.class);
+                proximaTela.putExtra("tipoUsuario", tipoUsuario);
+                startActivity(proximaTela);
+                finish();
             }
         });
 

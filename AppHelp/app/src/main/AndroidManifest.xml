@@ -19,20 +19,10 @@
         <activity android:name=".control.CadastroActivity" />
         <activity android:name=".control.MenuPrincipalActivity" />
         <activity android:name=".control.CriarAtividadeActivity" />
-        <activity android:name=".control.AtividadesActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".control.PerfilActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".control.AtividadesActivity" />
+        <activity android:name=".control.PerfilActivity" />
+        <activity android:name=".control.CriarHorarioActivity" />
+        <activity android:name=".control.HorariosActivity"></activity>
     </application>
 
 </manifest>
