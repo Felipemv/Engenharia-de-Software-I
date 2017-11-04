@@ -45,13 +45,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <ImageView
-
-                        android:id="@+id/logoID"
-                        android:layout_width="140dp"
-                        android:layout_height="140dp"
-                        android:src="@drawable/logo"
-                        android:layout_gravity="right"/>
                 </LinearLayout>
 
             </LinearLayout>

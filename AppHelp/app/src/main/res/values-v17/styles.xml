@@ -10,25 +10,4 @@
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_marginRight">20dp</item>
     </style>
-
-    <style name="mensagem_erro">
-        <item name="android:color">@color/erro</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">20dp</item>
-        <item name="android:layout_marginRight">20dp</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:textColor">@color/erro</item>
-        <item name="android:visibility">invisible</item>
-    </style>
-
-    <style name="textViewCabecalho">
-        <item name="android:textSize">@dimen/cabecalho</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textAlignment">center</item>
-    </style>
-
-
 </resources>

@@ -77,7 +77,6 @@ public class PerfilActivity extends AppCompatActivity {
         carregarPerfilDAO();
     }
 
-    // Referencia os componentes da tela para serem usados
     private void refereciaComponentes() {
         email = (EditText) findViewById(R.id.emailPerfilID);
         nome = (EditText) findViewById(R.id.nomePerfilID);
@@ -99,7 +98,6 @@ public class PerfilActivity extends AppCompatActivity {
         telaUsuario = (LinearLayout) findViewById(R.id.telaUsuarioID);
     }
 
-    //Adiciona Listeners aos botoes e demais componentes da tela
     private void adicionaListeners() {
         botaoVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +116,15 @@ public class PerfilActivity extends AppCompatActivity {
                 botaoSalvar.setText("Salvar");
 
                 editar = true;
-                habilitarEdicao();
+
+                nome.setEnabled(true);
+                email.setEnabled(true);
+                telefone.setEnabled(true);
+                curso.setEnabled(true);
+                periodo.setEnabled(true);
+                matricula.setEnabled(true);
+                ocupacao.setEnabled(true);
+                atividadeResponsavel.setEnabled(true);
             }
         });
 
@@ -126,7 +132,42 @@ public class PerfilActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(editar){
-                    editarPerfil();
+                    boolean edicaoOk;
+                    if(tipoUsuario.equals("Aluno")){
+                        Aluno aluno = new Aluno();
+
+                        aluno.setNomeCompleto(nome.getText().toString());
+                        aluno.setEmail(email.getText().toString());
+                        aluno.setTelefoneContato(telefone.getText().toString());
+                        aluno.setCurso(curso.getText().toString());
+                        aluno.setPeriodo(Integer.parseInt(periodo.getText().toString()));
+                        aluno.setMatricula(Integer.parseInt(matricula.getText().toString()));
+
+                        edicaoOk = new UsuarioDAO(aluno).editarPerfil(mAuth.getCurrentUser().getUid());
+                    }else{
+                        Administrador adm = new Administrador();
+
+                        adm.setNomeCompleto(nome.getText().toString());
+                        adm.setEmail(email.getText().toString());
+                        adm.setTelefoneContato(telefone.getText().toString());
+                        adm.setOcupacao(ocupacao.getText().toString());
+                        adm.setAtividadeResponsavel(atividadeResponsavel.getText().toString());
+
+                        edicaoOk = new UsuarioDAO(adm).editarPerfil(mAuth.getCurrentUser().getUid());
+                    }
+
+                    if (edicaoOk){
+                        Toast.makeText(PerfilActivity.this, "Perfil editado com sucesso!", Toast.LENGTH_LONG).show();
+
+                        Intent proximaPagina = new Intent(PerfilActivity.this, MenuPrincipalActivity.class);
+                        proximaPagina.putExtra("tipoUsuario", tipoUsuario);
+
+                        startActivity(proximaPagina);
+                        finish();
+                    }else{
+                        Toast.makeText(PerfilActivity.this, "Erro ao editar perfil!", Toast.LENGTH_LONG).show();
+                    }
+
                 }else{
                     Intent proximaPagina = new Intent(PerfilActivity.this, MenuPrincipalActivity.class);
                     proximaPagina.putExtra("tipoUsuario", tipoUsuario);
@@ -138,7 +179,6 @@ public class PerfilActivity extends AppCompatActivity {
         });
     }
 
-    //Mostra as informações referentes ao tipo de Usuário
     private void mostrarInfoUsuario() {
         if(tipoUsuario.equals("Aluno")){
             curso.setVisibility(View.VISIBLE);
@@ -157,19 +197,6 @@ public class PerfilActivity extends AppCompatActivity {
         }
     }
 
-    //Habilita os edit texts para edição
-    private void habilitarEdicao(){
-        nome.setEnabled(true);
-        email.setEnabled(true);
-        telefone.setEnabled(true);
-        curso.setEnabled(true);
-        periodo.setEnabled(true);
-        matricula.setEnabled(true);
-        ocupacao.setEnabled(true);
-        atividadeResponsavel.setEnabled(true);
-    }
-
-    //Carrega informações de perfil do banco de dados
     private void carregarPerfilDAO(){
         mAuth = FirebaseAuth.getInstance();
         user = new BancoDeDados().conexao(caminho+mAuth.getCurrentUser().getUid());
@@ -209,32 +236,6 @@ public class PerfilActivity extends AppCompatActivity {
                 Toast.makeText(PerfilActivity.this, "Erro ao carregar perfil!", Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    //Agrupa informações para edição do perfil
-    private void editarPerfil(){
-        if(tipoUsuario.equals("Aluno")){
-            Aluno aluno = new Aluno();
-
-            aluno.setNomeCompleto(nome.getText().toString());
-            aluno.setEmail(email.getText().toString());
-            aluno.setTelefoneContato(telefone.getText().toString());
-            aluno.setCurso(curso.getText().toString());
-            aluno.setPeriodo(Integer.parseInt(periodo.getText().toString()));
-            aluno.setMatricula(Integer.parseInt(matricula.getText().toString()));
-
-            new UsuarioDAO(aluno, PerfilActivity.this).editarPerfil(mAuth.getCurrentUser().getUid());
-        }else{
-            Administrador adm = new Administrador();
-
-            adm.setNomeCompleto(nome.getText().toString());
-            adm.setEmail(email.getText().toString());
-            adm.setTelefoneContato(telefone.getText().toString());
-            adm.setOcupacao(ocupacao.getText().toString());
-            adm.setAtividadeResponsavel(atividadeResponsavel.getText().toString());
-
-            new UsuarioDAO(adm, PerfilActivity.this).editarPerfil(mAuth.getCurrentUser().getUid());
-        }
     }
 
 }

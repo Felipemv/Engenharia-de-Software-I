@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+
+        <TextView
+            android:id="@+id/viewHorarioHoraID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hora"
+            android:textSize="20dp"
+            android:background="@color/hora"/>
+
+        <TextView
+            android:id="@+id/viewHorarioNomeID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nome"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/viewHorarioTipoID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tipo"
+            android:textSize="20dp"/>
+
+
+        <TextView
+            android:id="@+id/viewHorarioCodigoID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Código"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/viewHorarioLocalID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Local"
+            android:textSize="20dp"/>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

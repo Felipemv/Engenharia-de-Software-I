@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import es.inatel.br.apphelp.R;
 
@@ -25,12 +26,20 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_principal);
 
+
         bundle = getIntent().getExtras();
-        if(bundle.containsKey("tipoUsuario")){
-            tipoUsuario = bundle.getString("tipoUsuario");
+
+        if(bundle != null) {
+            if (bundle.containsKey("tipoUsuario")) {
+                tipoUsuario = bundle.getString("tipoUsuario");
+            }
+
         }
+
         referenciaComponentes();
         adicionarListeners();
+
+
     }
 
 
@@ -76,7 +85,9 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         menuSair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(MenuPrincipalActivity.this, "Logout feito com sucesso!!", Toast.LENGTH_LONG).show();
                 finish();
+
             }
         });
     }

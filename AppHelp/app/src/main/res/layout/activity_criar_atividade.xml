@@ -152,12 +152,13 @@
                 android:layout_height="wrap_content">
 
                 <Button
+                    android:id="@+id/botaoVoltarIDCriarAtiv"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:text="Voltar"
-                    android:layout_marginTop="20dp"
+                    android:layout_gravity="left"
                     android:layout_marginLeft="30dp"
-                    android:layout_gravity="left"/>
+                    android:layout_marginTop="20dp"
+                    android:text="Voltar" />
 
                 <Button
                     android:layout_width="120dp"

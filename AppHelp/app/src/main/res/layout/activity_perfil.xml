@@ -51,22 +51,31 @@
                     <!-- Componentes principais da tela -->
                     <EditText
                         android:id="@+id/nomePerfilID"
-                        style="@style/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
                         android:hint="Nome"
+                        android:textSize="@dimen/editText"
                         android:inputType="textPersonName"
                         android:enabled="false"/>
 
                     <EditText
                         android:id="@+id/emailPerfilID"
-                        style="@style/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
                         android:hint="Email"
+                        android:textSize="@dimen/editText"
                         android:inputType="textEmailAddress"
                         android:enabled="false"/>
 
                     <EditText
                         android:id="@+id/telefonePerfilID"
-                        style="@style/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
                         android:hint="Telefone para contato"
+                        android:textSize="@dimen/editText"
                         android:inputType="phone"
                         android:enabled="false"/>
 
@@ -85,24 +94,33 @@
 
                             <EditText
                                 android:id="@+id/cursoPerfilID"
-                                style="@style/editText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="15dp"
                                 android:hint="@string/curso"
+                                android:textSize="@dimen/editText"
                                 android:inputType="textPersonName"
                                 android:visibility="gone"
                                 android:enabled="false"/>
 
                             <EditText
                                 android:id="@+id/periodoPerfilID"
-                                style="@style/editText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="15dp"
                                 android:hint="@string/periodo"
+                                android:textSize="@dimen/editText"
                                 android:inputType="textPersonName"
                                 android:visibility="gone"
                                 android:enabled="false"/>
 
                             <EditText
                                 android:id="@+id/matriculaPerfilID"
-                                style="@style/editText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="15dp"
                                 android:hint="@string/matricula"
+                                android:textSize="@dimen/editText"
                                 android:inputType="textPersonName"
                                 android:visibility="gone"
                                 android:enabled="false"/>
@@ -116,15 +134,22 @@
 
                             <EditText
                                 android:id="@+id/ocupacaoID"
-                                style="@style/editText"
-                                android:hint="@string/ocupacao"                                                                android:inputType="textPersonName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="15dp"
+                                android:hint="@string/ocupacao"
+                                android:textSize="@dimen/editText"
+                                android:inputType="textPersonName"
                                 android:visibility="gone"
                                 android:enabled="false"/>
 
                             <EditText
                                 android:id="@+id/atividadeRespID"
-                                style="@style/editText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="15dp"
                                 android:hint="@string/resp"
+                                android:textSize="@dimen/editText"
                                 android:inputType="textPersonName"
                                 android:visibility="gone"
                                 android:enabled="false"/>
@@ -134,7 +159,11 @@
 
                     <TextView
                         android:id="@+id/erroCadastroID"
-                        style="@style/mensagem_erro" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/holo_red_light"
+                        android:visibility="invisible"/>
                 </LinearLayout>
 
                 <android.support.constraint.ConstraintLayout

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "813285251873-u6s1gn7morslvg5nu8d0kikfki36m93i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "es.inatel.br.apphelp",
+            "certificate_hash": "910d877c90a43119cf80a55f52610787f6a6ab04"
+          }
+        },
+        {
           "client_id": "813285251873-8d89l98ukruihr508pgqfapfr34dbnkv.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
