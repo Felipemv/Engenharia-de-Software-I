@@ -153,6 +153,9 @@ public class LoginActivity extends AppCompatActivity{
                     erroLogin.setText("Tipo de usuário não selecionado");
                 }else {
                     try {
+                        String email = emailLogin.getText().toString();
+                        String senha = senhaLogin.getText().toString();
+
                         login(emailLogin.getText().toString(), senhaLogin.getText().toString());
                         progressDialog.dismiss();
                     } catch (InterruptedException e) {

@@ -57,6 +57,8 @@ public class UsuarioDAO {
             }
         });
 
+        FirebaseUser fb = mAuth.getCurrentUser();
+
         if(mAuth.getCurrentUser() == null) return null;
 
         String id = mAuth.getCurrentUser().getUid();
