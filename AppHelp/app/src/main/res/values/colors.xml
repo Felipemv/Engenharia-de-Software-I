@@ -9,4 +9,6 @@
     <color name="divider">#66CCFF </color>
     <color name="background_listView">#F5F5F5</color>
     <color name="hora">#F0F8FF</color>
+
+    <color name="erro">#FF0000</color>
 </resources>

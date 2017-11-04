@@ -30,4 +30,5 @@
     <string name="sexta_feira">Sexta-Feira</string>
     <string name="quinta_feira">Quinta-Feira</string>
     <string name="excluir">Excluir</string>
+    <string name="campos_preenchidos">Todos os campos devem ser preenchidos</string>
 </resources>

@@ -1,5 +1,9 @@
 package es.inatel.br.apphelp.model;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
@@ -13,6 +17,10 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.HashMap;
 import java.util.Map;
 
+import es.inatel.br.apphelp.control.LoginActivity;
+import es.inatel.br.apphelp.control.MenuPrincipalActivity;
+import es.inatel.br.apphelp.control.PerfilActivity;
+
 /**
  * Created by felipe on 28/10/17.
  */
@@ -20,55 +28,95 @@ import java.util.Map;
 public class UsuarioDAO {
 
     private String caminho;
+    private String tipoUsuario;
     private FirebaseAuth mAuth;
-    private DatabaseReference user;
+    private DatabaseReference database;
+
+    private Context context;
 
     private Usuario usuario;
 
-    public UsuarioDAO(Usuario usuario){
-        if(usuario instanceof Aluno)    caminho = "Usuarios/Aluno/";
-        else                            caminho = "Usuarios/Administrador/";
+    public UsuarioDAO(Usuario usuario, Context context){
+        if(usuario instanceof Aluno)                tipoUsuario = "Aluno";
+        else if(usuario instanceof Administrador)   tipoUsuario = "Administrador";
 
         this.usuario = usuario;
+        this.context = context;
+
+        caminho = "Usuarios/"+tipoUsuario+"/";
     }
 
-    public FirebaseUser cadastroUsuario(){
-
+    //Cadastra email e senha de autenticação e adiciona perfil no banco de dados
+    public void cadastroUsuario(String email, String senha){
         mAuth = FirebaseAuth.getInstance();
-        mAuth.createUserWithEmailAndPassword(usuario.getEmail(), usuario.getSenha()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+        mAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    try {
-                        wait(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    String id = mAuth.getCurrentUser().getUid();
+
+                    database = new BancoDeDados().conexao(caminho+id);
+                    database.setValue(usuario);
+
+                    Intent proximaPagina = new Intent(context, LoginActivity.class);
+                    context.startActivity(proximaPagina);
+                    ((Activity)context).finish();
+
+                    Toast.makeText(context, "Usuário cadastrado com sucesso!", Toast.LENGTH_LONG).show();
+
+                }else{
+                    Toast.makeText(context, "Falha ao cadastrar usuário!", Toast.LENGTH_LONG).show();
                 }
             }
         });
+        /*
+        mAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(context, "Usuário cadastrado com sucesso!", Toast.LENGTH_LONG).show();
 
-        if(mAuth.getCurrentUser() == null) return null;
+                    String id = mAuth.getCurrentUser().getUid();
+                    user = new BancoDeDados().conexao(caminho+id);
 
-        String id = mAuth.getCurrentUser().getUid();
-        user = new BancoDeDados().conexao(caminho+id);
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
-        user.setValue(usuario);
+                    user.setValue(usuario);
 
-        return mAuth.getCurrentUser();
+                    Intent proximaPagina = new Intent(context, LoginActivity.class);
+                    context.startActivity(proximaPagina);
+                    ((Activity)context).finish();
+                }else{
+                    Toast.makeText(context, "Falha ao cadastrar usuário", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        */
     }
 
-
+    //Edita informações do perfil do usuário
     public boolean editarPerfil(String uId){
-        user = new BancoDeDados().conexao("");
+        database = new BancoDeDados().conexao("");
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(caminho + uId, usuario);
 
         try {
-            user.updateChildren(childUpdates);
+            database.updateChildren(childUpdates);
+            Toast.makeText(context, "Perfil atualizado com sucesso!", Toast.LENGTH_LONG).show();
+
+            Intent proximaPagina = new Intent(context, MenuPrincipalActivity.class);
+            proximaPagina.putExtra("tipoUsuario", tipoUsuario);
+
+            context.startActivity(proximaPagina);
+            ((Activity)context).finish();
         }catch (Exception e){
-            return false;
+            Toast.makeText(context, "Erro ao atualizar perfil!", Toast.LENGTH_LONG);
         }
         return true;
     }

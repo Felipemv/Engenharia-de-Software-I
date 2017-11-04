@@ -61,54 +61,21 @@ public class LoginActivity extends AppCompatActivity{
         teste();
     }
 
+    //Prepara para o Login
     public void login(String email, String senha) throws InterruptedException {
+
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Logando...");
+        progressDialog.show();
+
         if(radioAluno.isChecked())  tipoUsuario = "Aluno";
         else                        tipoUsuario = "Administrador";
 
-        caminho = "Usuarios/" +tipoUsuario;
-        mAuth = FirebaseAuth.getInstance();
-
-        mAuth.signInWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(!task.isSuccessful()){
-                    mAuth.signOut();
-                }
-            }
-        });
-
-        fbUser = mAuth.getCurrentUser();
-
-        if(mAuth.getCurrentUser() != null){
-            user = new BancoDeDados().conexao(caminho);
-
-            user.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.hasChild(mAuth.getCurrentUser().getUid())){
-                        Toast.makeText(LoginActivity.this, "Login efetuado com sucesso!", Toast.LENGTH_LONG).show();
-
-                        Intent proximaPagina = new Intent(LoginActivity.this, MenuPrincipalActivity.class);
-                        proximaPagina.putExtra("tipoUsuario", tipoUsuario);
-                        startActivity(proximaPagina);
-                        finish();
-                    }else{
-                        Toast.makeText(LoginActivity.this, "Erro ao efetuar login!", Toast.LENGTH_LONG).show();
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Toast.makeText(LoginActivity.this, "Erro ao efetuar login!", Toast.LENGTH_LONG).show();
-                }
-            });
-        }else{
-            Toast.makeText(LoginActivity.this, "Erro ao efetuar login!", Toast.LENGTH_LONG).show();
-        }
-
-
+        new LoginDAO(email, senha, tipoUsuario, LoginActivity.this).autenticacao();
+        progressDialog.dismiss();
     }
 
+    // Referencia os componentes da tela para serem usados
     private void referenciaComponentes() {
         botaoLogin = (Button) findViewById(R.id.botaoLoginID);
 
@@ -122,6 +89,7 @@ public class LoginActivity extends AppCompatActivity{
         radioAdm = (RadioButton) findViewById(R.id.radioAdmLoginID);
     }
 
+    //Adiciona Listeners aos botoes e demais componentes da tela
     private void adicionaListeners() {
         botaoCadastrarLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,7 +115,6 @@ public class LoginActivity extends AppCompatActivity{
                 }else {
                     try {
                         login(emailLogin.getText().toString(), senhaLogin.getText().toString());
-                        progressDialog.dismiss();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -156,15 +123,7 @@ public class LoginActivity extends AppCompatActivity{
         });
     }
 
-    public void teste(){
-        emailLogin.setText("felipe.martinsvitor@gmail.com");
-        senhaLogin.setText("felipe");
-        radioAluno.setChecked(true);
-
-        //emailLogin.setFocusable(false);
-        //senhaLogin.setFocusable(false);
-    }
-
+    //Faz a validação dos dados entrados pelo usuário
     public int validaEntrada(){
         String email = emailLogin.getText().toString().trim();
         String senha = senhaLogin.getText().toString().trim();
@@ -174,6 +133,16 @@ public class LoginActivity extends AppCompatActivity{
         if(!radioAluno.isChecked() && !radioAdm.isChecked()) return -1;
 
         return 1;
+    }
+
+    //Valores de teste para poupar tempo
+    public void teste(){
+        emailLogin.setText("felipe.martinsvitor@gmail.com");
+        senhaLogin.setText("felipe");
+        radioAluno.setChecked(true);
+
+        //emailLogin.setFocusable(false);
+        //senhaLogin.setFocusable(false);
     }
 }
 
