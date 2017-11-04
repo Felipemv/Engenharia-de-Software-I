@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
@@ -43,5 +43,41 @@
         <item name="android:layout_marginRight">20dp</item>
         <item name="android:topLeftRadius">20dp</item>
         <item name="android:topRightRadius">20dp</item>
+    </style>
+
+    <style name="mensagem_erro">
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:textAlignment" tools:ignore="NewApi">center</item>
+        <item name="android:textColor">@color/erro</item>
+        <item name="android:visibility">invisible</item>
+    </style>
+
+    <style name="editText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/editText</item>
+        <item name="android:layout_margin">15dp</item>
+    </style>
+
+    <style name="textViewCabecalho">
+        <item name="android:textSize">@dimen/cabecalho</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment" tools:targetApi="jelly_bean_mr1">center</item>
+    </style>
+
+    <style name="botoes">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">40dp</item>
+        <item name="android:layout_marginLeft">40dp</item>
+        <item name="android:layout_marginTop">40dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:textSize">@dimen/texto_botao</item>
+        <item name="android:gravity">center</item>
     </style>
 </resources>

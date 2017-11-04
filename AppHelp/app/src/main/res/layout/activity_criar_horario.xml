@@ -177,36 +177,38 @@
                     </LinearLayout>
 
                 <TextView
-                    android:id="@+id/erroCadastroID"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/holo_red_light"
-                    android:visibility="invisible"/>
+                    android:id="@+id/erroHorariosID"
+                    style="@style/mensagem_erro"
+                    android:text="@string/campos_preenchidos"/>
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
 
                     <Button
-                        android:id="@+id/botaoVoltarID"
+                        android:id="@+id/botaoVoltarHorarioID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="40dp"
                         android:layout_marginBottom="10dp"
+                        android:layout_marginTop="20dp"
                         android:text="@string/voltar"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="40dp" />
 
                     <Button
-                        android:id="@+id/botaoSalvarID"
+                        android:id="@+id/botaoSalvarHorarioID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="40dp"
                         android:layout_marginBottom="10dp"
+                        android:layout_marginTop="20dp"
                         android:text="@string/criar"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="40dp" />
                 </android.support.constraint.ConstraintLayout>
 
             </LinearLayout>

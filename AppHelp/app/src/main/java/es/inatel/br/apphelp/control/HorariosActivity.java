@@ -1,32 +1,33 @@
 package es.inatel.br.apphelp.control;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.AttributeSet;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.net.HttpRetryException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import es.inatel.br.apphelp.R;
-import es.inatel.br.apphelp.model.Administrador;
-import es.inatel.br.apphelp.model.Aluno;
 import es.inatel.br.apphelp.model.BancoDeDados;
+import es.inatel.br.apphelp.model.ExpandableListAdapter;
 import es.inatel.br.apphelp.model.Horarios;
-import es.inatel.br.apphelp.model.ListaAdapterHorario;
+import es.inatel.br.apphelp.model.ListaHorarios;
 
 public class HorariosActivity extends AppCompatActivity{
 
@@ -35,28 +36,19 @@ public class HorariosActivity extends AppCompatActivity{
     private String tipoUsuario;
     private String caminho;
     private String[] diasDaSemana = {"Segunda", "Terca", "Quarta", "Quinta", "Sexta", "Sabado"};
+    private String semana[] = {"Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira",
+            "Sexta-Feira", "Sábado"};
 
     private Button criar;
     private Button editar;
     private Button excluir;
 
-    private ListView lvSegunda;
-    private ListView lvTerca;
-    private ListView lvQuarta;
-    private ListView lvQuinta;
-    private ListView lvSexta;
-    private ListView lvSabado;
-
-    private ListaAdapterHorario adapterSegunda;
-    private ListaAdapterHorario adapterTerca;
-    private ListaAdapterHorario adapterQuarta;
-    private ListaAdapterHorario adapterQuinta;
-    private ListaAdapterHorario adapterSexta;
-    private ListaAdapterHorario adapterSabado;
-
     private DatabaseReference database;
     FirebaseAuth mAuth;
     private FirebaseUser user;
+
+    private ExpandableListAdapter listAdapter;
+    private ExpandableListView expListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,27 +66,48 @@ public class HorariosActivity extends AppCompatActivity{
 
         referenciaComponentes();
         adicionarListeners();
-        for (int i = 0; i < diasDaSemana.length; i++)  {
-            carregarListas(diasDaSemana[i]);
-        }
+
+        carregarListas();
+
     }
 
-    private void carregarListas(final String diaSemana) {
-        database = new BancoDeDados().conexao(caminho+diaSemana);
+    private void carregarListas() {
+        database = new BancoDeDados().conexao(caminho);
 
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot != null){
-                    ArrayList<Horarios> list = new ArrayList<>();
+                    String nome;
+
+                    ArrayList<ListaHorarios> list = new ArrayList<>();
+
                     for(DataSnapshot ds: dataSnapshot.getChildren()){
-                        list.add(ds.getValue(Horarios.class));
+                        nome = ds.getKey();
+
+                        Horarios horarios;
+                        ArrayList<Horarios> h = new ArrayList<>();
+
+                        for (DataSnapshot ds1: ds.getChildren()){
+                            horarios = new Horarios();
+
+                            horarios = ds1.getValue(Horarios.class);
+                            h.add(horarios);
+                            nome = horarios.getDiaDaSemana();
+                        }
+
+                        ListaHorarios listaHorarios = new ListaHorarios();
+                        listaHorarios.setDiaDaSemana(nome);
+                        listaHorarios.setHorarios(h);
+
+                        list.add(listaHorarios);
                     }
 
-                    criarAdapters(diaSemana, list);
+                    organizaLista(list);
 
-                }else{
-
+                    ExpandableListView elv = (ExpandableListView) findViewById(R.id.lvExp);
+                    ExpandableListAdapter adapter = new ExpandableListAdapter(HorariosActivity.this, list);
+                    elv.setAdapter(adapter);
                 }
             }
 
@@ -105,75 +118,64 @@ public class HorariosActivity extends AppCompatActivity{
         });
     }
 
+    public void organizaLista(ArrayList<ListaHorarios> list){
+
+        //Pega os valores da lista pra procurar os valores que faltam
+        ArrayList<String> valores = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            valores.add(list.get(i).getDiaDaSemana());
+        }
+        ListaHorarios l;
+
+
+        //Procura e completa com os dias que estão faltando
+        boolean ok;
+        for (int i = 0; i < semana.length; i++) {
+            ok = false;
+            for (int j = 0; j < list.size(); j ++){
+                if(list.get(j).getDiaDaSemana().equals(semana[i])) {
+                    ok = true;
+                    break;
+                }
+            }
+            if(!ok){
+                l = new ListaHorarios();
+                l.setDiaDaSemana(semana[i]);
+                l.setHorarios(new ArrayList<Horarios>());
+
+                list.add(l);
+            }
+        }
+
+        //Ordena os dias da semana para listagem
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getDiaDaSemana().equals("Segunda-Feira"))          Collections.swap(list, i,0);
+            else if(list.get(i).getDiaDaSemana().equals("Terça-Feira"))       Collections.swap(list, i, 1);
+            else if(list.get(i).getDiaDaSemana().equals("Quarta-Feira"))      Collections.swap(list, i, 2);
+            else if(list.get(i).getDiaDaSemana().equals("Quinta-Feira"))      Collections.swap(list, i, 3);
+            else if(list.get(i).getDiaDaSemana().equals("Sexta-Feira"))       Collections.swap(list, i, 4);
+            else   Collections.swap(list, i, 5);
+        }
+
+    }
+
     private void adicionarListeners() {
         criar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent proximaTela = new Intent(HorariosActivity.this,
-                        CriarHorarioActivity.class);
+                CriarHorarioActivity.class);
+                proximaTela.putExtra("tipoUsuario", tipoUsuario);
                 startActivity(proximaTela);
-            }
-        });
-
-        editar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent proximaTela = new Intent(HorariosActivity.this,
-                        CriarHorarioActivity.class);
-                startActivity(proximaTela);
-            }
-        });
-
-        excluir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
     }
 
     private void referenciaComponentes() {
         criar = (Button) findViewById(R.id.criarHorarioID);
-        editar = (Button) findViewById(R.id.editarHorarioID);
-        excluir = (Button) findViewById(R.id.excluirHorarioID);
-
-        lvSegunda = (ListView) findViewById(R.id.listSegundaID);
-        lvTerca = (ListView) findViewById(R.id.listTercaID);
-        lvQuarta = (ListView) findViewById(R.id.listQuartaID);
-        lvQuinta = (ListView) findViewById(R.id.listQuintaID);
-        lvSexta = (ListView) findViewById(R.id.listSextaID);
-        lvSabado = (ListView) findViewById(R.id.listSabadoID);
     }
 
     private void criarAdapters(String diaSemana, ArrayList list){
-        if(diaSemana.equals("Segunda")){
-            adapterSegunda = new ListaAdapterHorario(this, list);
-            lvSegunda.setAdapter(adapterSegunda);
-        }
 
-        else if(diaSemana.equals("Terca")){
-            adapterTerca = new ListaAdapterHorario(this, list);
-            lvTerca.setAdapter(adapterTerca);
-        }
-
-        else if(diaSemana.equals("Quarta")){
-            adapterQuarta = new ListaAdapterHorario(this, list);
-            lvQuarta.setAdapter(adapterQuarta);
-        }
-
-        else if(diaSemana.equals("Quinta")){
-            adapterQuinta = new ListaAdapterHorario(this, list);
-            lvQuinta.setAdapter(adapterQuinta);
-        }
-
-        else if(diaSemana.equals("Sexta")){
-            adapterSexta = new ListaAdapterHorario(this, list);
-            lvSexta.setAdapter(adapterSexta);
-        }
-
-        else{
-            adapterSabado = new ListaAdapterHorario(this, list);
-            lvSabado.setAdapter(adapterSabado);
-        }
     }
 }

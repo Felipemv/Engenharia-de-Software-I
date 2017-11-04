@@ -1,5 +1,7 @@
 package es.inatel.br.apphelp.model;
 
+import android.widget.EditText;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -9,35 +11,34 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.inatel.br.apphelp.control.CriarHorarioActivity;
+
 /**
  * Created by felipe on 26/10/17.
  */
 
 public class HorariosDAO {
 
+    private boolean existe = false;
     private final String CAMINHO;
     private FirebaseAuth mAuth;
     private DatabaseReference user;
 
-    public HorariosDAO(FirebaseAuth mAuth){
-        this.mAuth = mAuth;
-        CAMINHO = "Usuarios/Administrador/"+mAuth.getCurrentUser().getUid()+"Horarios";
+    public HorariosDAO(){
+        mAuth = FirebaseAuth.getInstance();
+        CAMINHO = "Usuarios/Aluno/"+mAuth.getCurrentUser().getUid()+"/Horarios/";
     }
 
-    public void criarHorarios(Horarios horarios){
-        user = new BancoDeDados().conexao(CAMINHO+horarios.getDiaDaSemana());
-        user.setValue(horarios);
-    }
+    public void criarHorarios(final Horarios horarios, String diaSemana){
+        user = new BancoDeDados().conexao(CAMINHO+diaSemana);
 
-    public ArrayList<Horarios> listarHorarios(){
-
-        List<Horarios> lista = new ArrayList<>();
-
-        user = new BancoDeDados().conexao(CAMINHO);
-        user.addValueEventListener(new ValueEventListener() {
+        user.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //Cria o codigo pra listar todos os valores
+                if(!dataSnapshot.hasChild(horarios.getHora())) {
+                    funcao(dataSnapshot);
+                    user.child(horarios.getHora()).setValue(horarios);
+                }
             }
 
             @Override
@@ -46,7 +47,11 @@ public class HorariosDAO {
             }
         });
 
-        return (ArrayList<Horarios>) lista;
+        boolean v = existe;
+    }
+
+    public void funcao(DataSnapshot dataSnapshot){
+        existe = true;
     }
 
     public boolean editarHorarios(){
@@ -54,8 +59,8 @@ public class HorariosDAO {
         return true;
     }
 
-    public boolean removerHorarios(){
-        //Codigo para remover
+    public boolean removerHorarios(String dia, String horario){
+
         return false;
     }
 
