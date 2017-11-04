@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "813285251873",
+    "firebase_url": "https://apphelp-23e87.firebaseio.com",
+    "project_id": "apphelp-23e87",
+    "storage_bucket": "apphelp-23e87.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813285251873:android:ef29c30d5e95b039",
+        "android_client_info": {
+          "package_name": "es.inatel.br.apphelp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "813285251873-u6s1gn7morslvg5nu8d0kikfki36m93i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "es.inatel.br.apphelp",
+            "certificate_hash": "910d877c90a43119cf80a55f52610787f6a6ab04"
+          }
+        },
+        {
+          "client_id": "813285251873-8d89l98ukruihr508pgqfapfr34dbnkv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "es.inatel.br.apphelp",
+            "certificate_hash": "334ec83df038c65a825547adc41a9e3d82eba081"
+          }
+        },
+        {
+          "client_id": "813285251873-c959guecg804m08ospcptcf7djg7n7ip.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYzxIogFFjHjobjHD8dm6sDT0lPTZbUyE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "813285251873-c959guecg804m08ospcptcf7djg7n7ip.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

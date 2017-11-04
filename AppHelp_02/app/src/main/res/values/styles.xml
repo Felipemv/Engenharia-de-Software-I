@@ -1,0 +1,47 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="listViewHorario">
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:divider">@color/divider</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">30dp</item>
+        <item name="android:background">@color/background_listView</item>
+        <item name="android:alwaysDrawnWithCache">true</item>
+        <item name="android:horizontalSpacing">3dp</item>
+        <item name="android:scrollingCache">true</item>
+        <item name="android:smoothScrollbar">true</item>
+        <item name="android:stretchMode">columnWidth</item>
+        <item name="android:verticalSpacing">3dp</item>
+    </style>
+
+    <style name="textViewHorario">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/editText</item>
+        <item name="android:background">@color/cabecalho_listView</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:topLeftRadius">20dp</item>
+        <item name="android:topRightRadius">20dp</item>
+    </style>
+</resources>

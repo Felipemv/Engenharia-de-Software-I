@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="es.inatel.br.apphelp.control.CadastroActivity">
+
+    <ScrollView
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
+
+            <!--Cabecalho da tela-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/largura_foto_perfil"
+                        android:layout_height="@dimen/altura_foto_perfil"
+                        android:src="@drawable/boneco_perfil" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Adicionar Foto"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Cadastro"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/cabecalho" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tipo de usuario: "
+                    android:textSize="20dp" />
+
+                <RadioGroup
+                    android:id="@+id/group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioAlunoCadastroID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="Aluno" />
+
+                    <RadioButton
+                        android:id="@+id/radioAdmCadastroID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="Administrador" />
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <!-- Componentes principais da tela -->
+            <EditText
+                android:id="@+id/nomeCadastroID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:hint="Nome"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/emailCadastroID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/senhaCadastroID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:hint="Senha"
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/confirmarSenhaCadastroID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:hint="Confirmar Senha"
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/telefoneContatoID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:hint="Telefone para contato"
+                android:inputType="phone" />
+
+            <!--Componentes especificos de usuario-->
+            <LinearLayout
+                android:id="@+id/viewSwitcherID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!--View Cadastro Alunos-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/cursoID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:hint="Curso"
+                        android:inputType="textPersonName"
+                        android:visibility="gone" />
+
+                    <EditText
+                        android:id="@+id/periodoID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:hint="Período"
+                        android:inputType="textPersonName"
+                        android:visibility="gone" />
+
+                    <EditText
+                        android:id="@+id/matriculaID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:hint="Matrícula"
+                        android:inputType="textPersonName"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <!--View Cadastro Administrador-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/ocupacaoID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:hint="Ocupação"
+                        android:inputType="textPersonName"
+                        android:visibility="gone" />
+
+                    <EditText
+                        android:id="@+id/atividadeRespID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:hint="Atividade de sua responsabilidade"
+                        android:inputType="textPersonName"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <GridLayout
+                android:id="@+id/gridLayoutID"
+                android:layout_width="273dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <Button
+                    android:id="@+id/botaoVoltarID"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="Voltar" />
+
+                <Button
+                    android:id="@+id/botaoCadastrarID"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+
+
+                    android:text="Cadastrar" />
+
+            </GridLayout>
+
+            <TextView
+                android:id="@+id/erroCadastroID"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_red_light"
+                android:visibility="invisible" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

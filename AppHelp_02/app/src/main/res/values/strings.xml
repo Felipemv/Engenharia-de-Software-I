@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">AppHelp</string>
+    <string name="title_activity_pagina_principal">PaginaPrincipal</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_perfil">Perfil</string>
+    <string name="curso">Curso</string>
+    <string name="periodo">Período</string>
+    <string name="matricula">Matrícula</string>
+    <string name="ocupacao">Ocupação</string>
+    <string name="resp">Atividade de sua responsabilidade</string>
+    <string name="voltar">Voltar</string>
+    <string name="editar">Editar</string>
+    <string name="salvar">Salvar</string>
+    <string name="continuar">continuar</string>
+    <string name="criar">criar</string>
+    <string name="dia_da_semana">Dia da semana</string>
+    <string name="tipo">Tipo</string>
+    <string name="nome_do_hor_rio">Nome do Horário</string>
+    <string name="horario">Horário</string>
+    <string name="local">Local</string>
+    <string name="c_digo">Código</string>
+    <string name="segunda_feira">Segunda-Feira</string>
+    <string name="terca_feira">Terça-Feira</string>
+    <string name="quarta_feira">Quarta-Feira</string>
+    <string name="sabado">Sábado</string>
+    <string name="sexta_feira">Sexta-Feira</string>
+    <string name="quinta_feira">Quinta-Feira</string>
+    <string name="excluir">Excluir</string>
+</resources>

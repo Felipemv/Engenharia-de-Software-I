@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="es.inatel.br.apphelp.control.LoginActivity">
+
+    <ScrollView
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textAlignment="center"
+                android:textSize="40sp" />
+
+            <EditText
+                android:id="@+id/emailLoginID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/senhaLoginID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:ems="10"
+                android:hint="Senha"
+                android:inputType="textPassword" />
+
+            <TextView
+                android:id="@+id/erroLoginID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_red_light"
+                android:visibility="invisible" />
+
+            <RadioGroup
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="20dp">
+
+                <RadioButton
+                    android:id="@+id/radioAlunoLoginID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Aluno"
+                    android:layout_margin="5dp"/>
+
+                <RadioButton
+                    android:id="@+id/radioAdmLoginID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Administrador"
+                    android:layout_margin="5dp"/>
+
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/botaoLoginID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="20dp"
+                android:text="Login" />
+
+            <TextView
+                android:id="@+id/botaoCadastrarLoginID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="15dp"
+                android:text="Não sou cadastrado"
+                android:textAlignment="center"
+                android:textSize="18sp"/>
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
