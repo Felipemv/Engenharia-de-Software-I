@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import es.inatel.br.apphelp.R;
+import es.inatel.br.apphelp.model.LoginDAO;
 
 public class MenuPrincipalActivity extends AppCompatActivity {
 
@@ -33,17 +34,14 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             if (bundle.containsKey("tipoUsuario")) {
                 tipoUsuario = bundle.getString("tipoUsuario");
             }
-
         }
-
         referenciaComponentes();
         adicionarListeners();
 
 
     }
 
-
-
+    // Referencia os componentes da tela para serem usados
     public void referenciaComponentes(){
         menuPerfil =        (Button) findViewById(R.id.menuPerfilID);
         menuHorario =       (Button) findViewById(R.id.menuHorarioID);
@@ -51,6 +49,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         menuSair =          (Button) findViewById(R.id.menuSairID);
     }
 
+    //Adiciona Listeners aos botoes e demais componentes da tela
     private void adicionarListeners() {
 
         menuPerfil.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +84,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         menuSair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MenuPrincipalActivity.this, "Logout feito com sucesso!!", Toast.LENGTH_LONG).show();
+                new LoginDAO(MenuPrincipalActivity.this).sair();
                 finish();
 
             }

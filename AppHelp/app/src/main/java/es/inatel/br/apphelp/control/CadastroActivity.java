@@ -1,5 +1,6 @@
 package es.inatel.br.apphelp.control;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,10 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import es.inatel.br.apphelp.R;
 import es.inatel.br.apphelp.model.Administrador;
-import es.inatel.br.apphelp.model.AdministradorDAO;
 import es.inatel.br.apphelp.model.Aluno;
-import es.inatel.br.apphelp.model.AlunoDAO;
-import es.inatel.br.apphelp.model.Usuario;
 import es.inatel.br.apphelp.model.UsuarioDAO;
 
 public class CadastroActivity extends AppCompatActivity{
@@ -66,78 +64,57 @@ public class CadastroActivity extends AppCompatActivity{
        // limpar_campos();
     }
 
-    public boolean cadastrarUsuario(final String email, final String senha, final String confirmarSenha){
+    //Prepara para o cadastro
+    public void cadastrarUsuario(){
+        if(radioAdm.isChecked())    tipoUsuario = "Administrador";
+        else tipoUsuario = "Aluno";
 
+        if(validaEntrada() == -1){
+            erroCadastro.setText("Tipo de usuário não selecionado!");
+        }else if (validaEntrada() == 0){
+            erroCadastro.setText("Todos os campos devem ser preenchidos!");
+        }else{
+            ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Cadastrando usuário...");
+            progressDialog.show();
 
-        if(emailCadastro.getText().toString().trim().length() == 0
-                || senhaCadastro.getText().toString().trim().length() == 0
-                || nome.getText().toString().trim().length() == 0){
+            if(tipoUsuario.equals("Aluno")){
+                Aluno aluno = new Aluno();
 
-            erroCadastro.setText("Os campos obrigatórios não foram preenchidos");
-            erroCadastro.setVisibility(View.VISIBLE);
-            return false;
+                aluno.setEmail(emailCadastro.getText().toString());
+                aluno.setNomeCompleto(nome.getText().toString());
+                aluno.setTelefoneContato(telefone.getText().toString());
+                aluno.setCurso(curso.getText().toString());
+                aluno.setPeriodo(Integer.parseInt(periodo.getText().toString()));
+                aluno.setMatricula(Integer.parseInt(matricula.getText().toString()));
 
-        }
+                mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
 
-        if(!senha.equals(confirmarSenha)){
-            erroCadastro.setText("As senhas precisam ser iguais");
-            erroCadastro.setVisibility(View.VISIBLE);
-            return false;
-
-        }
-
-        if(!radioAdm.isChecked()) {
-            tipoUsuario = "Administrador";
-
-            if(!radioAluno.isChecked()){
-                erroCadastro.setText("Tipo de usuário não selecionado ");
-                return false;
+                new UsuarioDAO(aluno, this).cadastroUsuario(emailCadastro.getText().toString(),
+                        senhaCadastro.getText().toString());
             }else{
-                tipoUsuario = "Aluno";
+                Administrador adm = new Administrador();
+
+                adm.setEmail(emailCadastro.getText().toString());
+                adm.setNomeCompleto(nome.getText().toString());
+                adm.setTelefoneContato(telefone.getText().toString());
+                adm.setOcupacao(ocupacao.getText().toString());
+                adm.setAtividadeResponsavel(atividadeResponsavel.getText().toString());
+
+                mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
+
+                new UsuarioDAO(adm, this).cadastroUsuario(emailCadastro.getText().toString(),
+                        senhaCadastro.getText().toString());
             }
-        }else{
-            tipoUsuario = "Administrador";
+
+            progressDialog.dismiss();
         }
 
-
-
-        if(tipoUsuario.equals("Aluno")){
-            Aluno aluno = new Aluno();
-
-            aluno.setEmail(email);
-            aluno.setNomeCompleto(nome.getText().toString());
-            aluno.setTelefoneContato(telefone.getText().toString());
-            aluno.setSenha(senhaCadastro.getText().toString());
-            aluno.setCurso(curso.getText().toString());
-            aluno.setPeriodo(Integer.parseInt(periodo.getText().toString()));
-            aluno.setMatricula(Integer.parseInt(matricula.getText().toString()));
-
-            mAuth = FirebaseAuth.getInstance();
-            mAuth.signOut();
-
-            firebaseUser = new UsuarioDAO(aluno).cadastroUsuario();
-        }else{
-            Administrador adm = new Administrador();
-
-            adm.setEmail(email);
-            adm.setNomeCompleto(nome.getText().toString());
-            adm.setTelefoneContato(telefone.getText().toString());
-            adm.setOcupacao(ocupacao.getText().toString());
-            adm.setAtividadeResponsavel(atividadeResponsavel.getText().toString());
-
-            firebaseUser = new UsuarioDAO(adm).cadastroUsuario();
-        }
-
-        if(firebaseUser != null){
-            Toast.makeText(CadastroActivity.this, "Cadastrado com sucesso!", Toast.LENGTH_LONG).show();
-            return true;
-        }
-
-//        firebaseUser.delete();
-        Toast.makeText(CadastroActivity.this, "Erro ao cadastrar usuário!", Toast.LENGTH_LONG).show();
-        return false;
     }
 
+    //Referencia os componentes da tela para serem usados
     public void referenciaComponentes(){
         emailCadastro = (EditText) findViewById(R.id.emailCadastroID);
         senhaCadastro = (EditText) findViewById(R.id.senhaCadastroID);
@@ -166,21 +143,13 @@ public class CadastroActivity extends AppCompatActivity{
 
     }
 
+    //Adiciona Listeners aos botoes e demais componentes da tela
     public void adicionarListeners(){
 
         botaoCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String email = emailCadastro.getText().toString();
-                String senha = senhaCadastro.getText().toString();
-                String confirmarSenha = confirmarSenhaCadastro.getText().toString();
-
-                if(cadastrarUsuario(email, senha, confirmarSenha)){
-                    Intent proximaTela = new Intent(CadastroActivity.this, LoginActivity.class);
-                    startActivity(proximaTela);
-                    finish();
-                }
+                cadastrarUsuario();
             }
         });
 
@@ -213,12 +182,9 @@ public class CadastroActivity extends AppCompatActivity{
                 }
             }
         });
-
-
-
-
     }
 
+    //Mostra as informações de cadastro referentes ao administrador e esconde as do aluno
     private void visibilidadeAdm() {
         ocupacao.setVisibility(View.VISIBLE);
         atividadeResponsavel.setVisibility(View.VISIBLE);
@@ -228,6 +194,7 @@ public class CadastroActivity extends AppCompatActivity{
         matricula.setVisibility(View.GONE);
     }
 
+    //Mostra as informações de cadastro referentes ao aluno e esconde as do administrador
     private void visibilidadeAluno() {
         curso.setVisibility(View.VISIBLE);
         periodo.setVisibility(View.VISIBLE);
@@ -237,6 +204,7 @@ public class CadastroActivity extends AppCompatActivity{
         atividadeResponsavel.setVisibility(View.GONE);
     }
 
+    //Apaga todos os campos
     private void limpar_campos(){
         nome.setText("");
         emailCadastro.setText("");
@@ -249,19 +217,53 @@ public class CadastroActivity extends AppCompatActivity{
         radioAluno.setChecked(true);
     }
 
-    public void dados()
-    {
-        nome.setText("Ensley");
-        emailCadastro.setText("ensleyfmr@gmail.com");
+    //Valores de teste para poupar tempo
+    public void dados(){
+        nome.setText("Felipe");
+        emailCadastro.setText("felipe.martinsvitor@gmail.com");
         senhaCadastro.setText("101010");
         confirmarSenhaCadastro.setText("101010");
-        telefone.setText("984178330");
+        telefone.setText("4324233");
         curso.setText("GEC");
         periodo.setText("6");
-        matricula.setText("1242");
+        matricula.setText("123");
         radioAluno.setChecked(true);
     }
 
+    //Faz a validação dos dados entrados pelo usuário
+    public int validaEntrada(){
+        String email = emailCadastro.getText().toString().trim();
+        String senha = senhaCadastro.getText().toString().trim();
+        String confS = confirmarSenhaCadastro.getText().toString().trim();
+        String nomeC = nome.getText().toString().trim();
+        String telef = telefone.getText().toString().trim();
 
+        if(email.equals("")) return 0;
+        if(senha.equals("")) return 0;
+        if(confS.equals("")) return 0;
+        if(nomeC.equals("")) return 0;
+        if(telef.equals("")) return 0;
+
+
+        if(radioAluno.isChecked()){
+            String cursoA = curso.getText().toString().trim();
+            String matric = matricula.getText().toString().trim();
+            String period = periodo.getText().toString();
+
+            if(cursoA.equals("")) return 0;
+            if(period.equals("")) return 0;
+            if(matric.equals("")) return 0;
+        }else if (radioAdm.isChecked()){
+            String ocup = ocupacao.getText().toString().trim();
+            String ativ = atividadeResponsavel.getText().toString().trim();
+
+            if(ocup.equals("")) return 0;
+            if(ativ.equals("")) return 0;
+        }else{
+            return -1;
+        }
+
+        return 1;
+    }
 }
 

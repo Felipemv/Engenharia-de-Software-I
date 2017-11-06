@@ -7,50 +7,33 @@
     tools:context="es.inatel.br.apphelp.control.LoginActivity">
 
     <ScrollView
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="8dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Login"
-                android:textAlignment="center"
-                android:textSize="40sp" />
+                style="@style/textViewCabecalho"
+                android:text="Login"/>
 
             <EditText
                 android:id="@+id/emailLoginID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                style="@style/editText"
                 android:hint="Email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"/>
 
             <EditText
                 android:id="@+id/senhaLoginID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:ems="10"
+                style="@style/editText"
                 android:hint="Senha"
                 android:inputType="textPassword" />
 
             <TextView
                 android:id="@+id/erroLoginID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:textAlignment="center"
-                android:textColor="@android:color/holo_red_light"
-                android:visibility="invisible" />
+                style="@style/mensagem_erro"/>
 
             <RadioGroup
                 android:layout_gravity="center"
@@ -77,25 +60,13 @@
 
             <Button
                 android:id="@+id/botaoLoginID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:layout_marginTop="20dp"
+                style="@style/botoes"
                 android:text="Login" />
 
             <TextView
                 android:id="@+id/botaoCadastrarLoginID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="15dp"
+                style="@style/textViewCabecalho"
                 android:text="Não sou cadastrado"
-                android:textAlignment="center"
                 android:textSize="18sp"/>
         </LinearLayout>
     </ScrollView>

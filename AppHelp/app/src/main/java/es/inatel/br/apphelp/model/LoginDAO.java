@@ -1,6 +1,11 @@
 package es.inatel.br.apphelp.model;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -14,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import es.inatel.br.apphelp.control.LoginActivity;
+import es.inatel.br.apphelp.control.MenuPrincipalActivity;
 
 /**
  * Created by felipe on 26/10/17.
@@ -21,49 +27,85 @@ import es.inatel.br.apphelp.control.LoginActivity;
 
 public class LoginDAO {
 
-    private final String CAMINHO;
-    private String email;
-    private String senha;
-    private String tipoUsuario;
-    private LoginActivity tela;
-    FirebaseAuth mAuth;
-    DatabaseReference user;
+    private String caminho;
 
-    public LoginDAO(String email, String senha, String tipoUsuario){
-        this.email = email;
-        this.senha = senha;
-        this.tipoUsuario = tipoUsuario;
-        CAMINHO = "Usuarios/" + tipoUsuario;
+    private String tipoUsuario;
+
+    private Context context;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference database;
+    private FirebaseUser user;
+
+
+    public LoginDAO(Context context){
+        this.context = context;
     }
 
-    public LoginDAO(String email, String senha, String tipoUsuario, LoginActivity loginActivity){
-                this.email = email;
-                this.senha = senha;
-                this.tipoUsuario = tipoUsuario;
-                this.tela = loginActivity;
-                CAMINHO = "Usuarios/" + tipoUsuario;
-            }
+    public void autenticacao(String email, String senha, final String tipoUsuario){
 
-    public FirebaseAuth autenticacao(){
+        caminho = "Usuarios/" + tipoUsuario;
+
         mAuth = FirebaseAuth.getInstance();
+        mAuth.signOut();
+
         mAuth.signInWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
+                if (!task.isSuccessful()){
+                    Toast.makeText(context, "Erro ao efetuar login!", Toast.LENGTH_SHORT).show();
                     mAuth.signOut();
+                }else{
+
                 }
             }
         });
-        return mAuth;
+
+        // Delay para corrigir problemas de tempo de autenticação
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        user = mAuth.getCurrentUser();
+
+
+        if(user != null){
+            database = new BancoDeDados().conexao(caminho);
+            database.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(!dataSnapshot.hasChild(mAuth.getCurrentUser().getUid())){
+                        mAuth.signOut();
+                        Toast.makeText(context, "Erro ao efetuar login!", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(context, "Login efetuado com sucesso!", Toast.LENGTH_LONG).show();
+
+                        Intent proximaPagina = new Intent(context, MenuPrincipalActivity.class);
+                        proximaPagina.putExtra("tipoUsuario", tipoUsuario);
+                        context.startActivity(proximaPagina);
+                        ((Activity) context).finish();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(context, "Erro ao efetuar login!", Toast.LENGTH_LONG).show();
+                }
+            });
+        }else{
+            Toast.makeText(context, "Erro ao efetuar login!", Toast.LENGTH_LONG).show();
+        }
 
     }
-    public boolean sair(FirebaseAuth auth){
-        auth.signOut();
 
-        if(auth.getCurrentUser() == null)return false;
+    public void sair(){
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.signOut();
 
-        return true;
+        if(mAuth.getCurrentUser() == null){
+            Toast.makeText(context, "Logout feito com sucesso!!", Toast.LENGTH_LONG).show();
+        }
     }
-
 
 }

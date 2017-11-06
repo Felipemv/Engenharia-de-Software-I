@@ -62,59 +62,16 @@ public class LoginActivity extends AppCompatActivity{
         //limpar_campo();
     }
 
+    //Reune informações para realizar o login
     public void login(String email, String senha) throws InterruptedException {
+
         if(radioAluno.isChecked())  tipoUsuario = "Aluno";
         else                        tipoUsuario = "Administrador";
 
-        caminho = "Usuarios/" +tipoUsuario;
-        mAuth = FirebaseAuth.getInstance();
-
-        mAuth.signInWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(!task.isSuccessful()){
-                    mAuth.signOut();
-                }
-            }
-        });
-
-        fbUser = mAuth.getCurrentUser();
-        // id de quem eu estou procurando
-        final String id = fbUser.getUid();
-
-        if(fbUser != null){
-            user = new BancoDeDados().conexao(caminho);
-
-            user.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    boolean id_que_estou_procurando_existe = dataSnapshot.hasChild(id);
-
-                    if (id_que_estou_procurando_existe) {
-                        Toast.makeText(LoginActivity.this, "Login efetuado com sucesso!", Toast.LENGTH_LONG).show();
-                        Intent proximaPagina = new Intent(LoginActivity.this, MenuPrincipalActivity.class);
-                        proximaPagina.putExtra("tipoUsuario", tipoUsuario);
-                        startActivity(proximaPagina);
-                        //finish();
-                    } else {
-                        Toast.makeText(LoginActivity.this, "E-mail ou senha inválido!", Toast.LENGTH_LONG).show();
-
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Toast.makeText(LoginActivity.this, "Erro ao efetuar login!", Toast.LENGTH_LONG).show();
-                }
-            });
-        }else{
-            Toast.makeText(LoginActivity.this, "Erro ao efetuar login!", Toast.LENGTH_LONG).show();
-        }
-
-
+        new LoginDAO(this).autenticacao(email, senha, tipoUsuario);
     }
 
+    // Referencia os componentes da tela para serem usados
     private void referenciaComponentes() {
         botaoLogin = (Button) findViewById(R.id.botaoLoginID);
 
@@ -128,6 +85,7 @@ public class LoginActivity extends AppCompatActivity{
         radioAdm = (RadioButton) findViewById(R.id.radioAdmLoginID);
     }
 
+    //Adiciona Listeners aos botoes e demais componentes da tela
     private void adicionaListeners() {
         botaoCadastrarLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,7 +100,6 @@ public class LoginActivity extends AppCompatActivity{
         botaoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog = ProgressDialog.show(LoginActivity.this, "AppHelp", "Logando...");
                 int validacao = validaEntrada();
 
                 if(validacao == 0){
@@ -153,11 +110,7 @@ public class LoginActivity extends AppCompatActivity{
                     erroLogin.setText("Tipo de usuário não selecionado");
                 }else {
                     try {
-                        String email = emailLogin.getText().toString();
-                        String senha = senhaLogin.getText().toString();
-
                         login(emailLogin.getText().toString(), senhaLogin.getText().toString());
-                        progressDialog.dismiss();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -166,23 +119,13 @@ public class LoginActivity extends AppCompatActivity{
         });
     }
 
-
-    public void limpar_campo()
-    {
+    //Limpa todos os campos de entrada
+    public void limpar_campo(){
         emailLogin.setText("");
         senhaLogin.setText("");
-
     }
 
-    public void teste(){
-        emailLogin.setText("felipe.martinsvitor@gmail.com");
-        senhaLogin.setText("felipe");
-        radioAluno.setChecked(true);
-
-        //emailLogin.setFocusable(false);
-        //senhaLogin.setFocusable(false);
-    }
-
+    //Faz a validação dos dados entrados pelo usuário
     public int validaEntrada(){
         String email = emailLogin.getText().toString().trim();
         String senha = senhaLogin.getText().toString().trim();
@@ -194,9 +137,9 @@ public class LoginActivity extends AppCompatActivity{
         return 1;
     }
 
-    public void dados()
-    {
-        emailLogin.setText("ensleyfmr@gmail.com");
+    //Valores de teste para poupar tempo
+    public void dados(){
+        emailLogin.setText("felipe.martinsvitor@gmail.com");
         senhaLogin.setText("101010");
         radioAluno.setChecked(true);
     }

@@ -24,8 +24,8 @@ public class AtividadesActivity extends AppCompatActivity {
 
     }
 
-    public void referenciaComponentes()
-    {
+    // Referencia os componentes da tela para serem usados
+    public void referenciaComponentes(){
         botaoInicio = (Button) findViewById(R.id.botaoInicioID);
         botaoInicio.setBackgroundResource(R.color.Green);
 
@@ -34,8 +34,8 @@ public class AtividadesActivity extends AppCompatActivity {
 
     }
 
-    public void adicionarListeners()
-    {
+    //Adiciona Listeners aos botoes e demais componentes da tela
+    public void adicionarListeners(){
         botaoInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,5 +1,11 @@
 package es.inatel.br.apphelp.model;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -7,7 +13,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import es.inatel.br.apphelp.control.CriarHorarioActivity;
+import es.inatel.br.apphelp.control.HorariosActivity;
+import es.inatel.br.apphelp.control.MenuPrincipalActivity;
 
 /**
  * Created by felipe on 26/10/17.
@@ -17,46 +29,90 @@ public class HorariosDAO {
 
     private final String CAMINHO;
     private FirebaseAuth mAuth;
-    private DatabaseReference user;
+    private DatabaseReference database;
+    private Context context;
 
-    public HorariosDAO(FirebaseAuth mAuth){
-        this.mAuth = mAuth;
-        CAMINHO = "Usuarios/Administrador/"+mAuth.getCurrentUser().getUid()+"Horarios";
+    public HorariosDAO(Context context){
+        mAuth = FirebaseAuth.getInstance();
+        CAMINHO = "Usuarios/Aluno/"+mAuth.getCurrentUser().getUid()+"/Horarios/";
+        this.context = context;
     }
 
-    public void criarHorarios(Horarios horarios){
-        user = new BancoDeDados().conexao(CAMINHO+horarios.getDiaDaSemana());
-        user.setValue(horarios);
-    }
+    //Criar Horários no banco de dados
+    public void criarHorarios(final Horarios horarios, String diaSemana){
+        database = new BancoDeDados().conexao(CAMINHO+diaSemana);
 
-    public ArrayList<Horarios> listarHorarios(){
-
-        List<Horarios> lista = new ArrayList<>();
-
-        user = new BancoDeDados().conexao(CAMINHO);
-        user.addValueEventListener(new ValueEventListener() {
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //Cria o codigo pra listar todos os valores
+                if(dataSnapshot.hasChild(horarios.getHora())) {
+                    Toast.makeText(context, "Atividade já cadastrada para esse horário!",
+                            Toast.LENGTH_LONG).show();
+                }else{
+                    database.child(horarios.getHora()).setValue(horarios);
+                    Toast.makeText(context, "Atividade cadastrada com sucesso!",
+                            Toast.LENGTH_LONG).show();
+
+                    Intent proximaPagina = new Intent(context, HorariosActivity.class);
+                    proximaPagina.putExtra("tipoUsuario", "Aluno");
+
+                    context.startActivity(proximaPagina);
+                    ((Activity)context).finish();
+
+                }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Toast.makeText(context, "Erro ao cadastrar horário!",
+                        Toast.LENGTH_LONG).show();
             }
         });
 
-        return (ArrayList<Horarios>) lista;
     }
 
-    public boolean editarHorarios(){
-        //Codigo para editar (UPDATE)
-        return true;
+    //Editar Horários no banco de dados
+    public void editarHorarios(Horarios horarios, String dia, String hora){
+
+        removerHorarios(dia, hora, false);
+
+        mAuth = FirebaseAuth.getInstance();
+        String id = mAuth.getCurrentUser().getUid();
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("Usuarios/Aluno/"+id+"/Horarios/"+horarios.getDiaDaSemana()+"/"
+                        +horarios.getHora(),horarios);
+
+        database = new BancoDeDados().conexao("");
+
+        database.updateChildren(childUpdates);
+        Toast.makeText(context, "Horário editado com sucesso!", Toast.LENGTH_LONG).show();
+
+        Intent proximaPagina = new Intent(context, HorariosActivity.class);
+        proximaPagina.putExtra("tipoUsuario", "Aluno");
+
+        context.startActivity(proximaPagina);
+        ((Activity)context).finish();
+
     }
 
-    public boolean removerHorarios(){
-        //Codigo para remover
-        return false;
+    //Remover Horários no banco de dados
+    public void removerHorarios(String dia, String horario, boolean remover){
+        database = new BancoDeDados().conexao(CAMINHO);
+
+        try{
+            database.child(dia).child(horario).removeValue();
+            if(remover){
+                Toast.makeText(context, "Horário removido com sucesso!",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+        }catch (Exception e){
+            Toast.makeText(context, "Erro ao remover horário!",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
 }

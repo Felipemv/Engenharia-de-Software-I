@@ -38,6 +38,7 @@ public class CriarAtividadeActivity extends AppCompatActivity {
         criarSpinners();
     }
 
+    //Adiciona Listeners aos botoes e demais componentes da tela
     private void adicionarListeners() {
         botaoVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,14 +51,15 @@ public class CriarAtividadeActivity extends AppCompatActivity {
         });
     }
 
+    // Referencia os componentes da tela para serem usados
     private void referenciarComponentes() {
-
         botaoVoltar = (Button) findViewById(R.id.botaoVoltarIDCriarAtiv);
 
         spinnerTipo = (Spinner) findViewById(R.id.tipoID);
         spinnerTempo = (Spinner) findViewById(R.id.tempoID);
     }
 
+    //Cria os spinners de opções
     private void criarSpinners(){
         opcoesTipo = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, itemTipo);
         spinnerTipo.setAdapter(opcoesTipo);

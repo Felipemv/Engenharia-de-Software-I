@@ -52,6 +52,7 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/cabecalhoCriarHorarioID"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="Criar Horário"
@@ -61,152 +62,154 @@
                     </LinearLayout>
 
                     <!-- Componentes principais da tela -->
-                        <EditText
-                            android:id="@+id/nomeHorarioID"
+                    <EditText
+                        android:id="@+id/nomeHorarioID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:hint="@string/nome_do_hor_rio"
+                        android:textSize="@dimen/editText"
+                        android:inputType="textPersonName"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tipo"
+                            android:layout_margin="15dp"
+                            android:paddingStart="5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="0dp"
+                            android:paddingEnd="0dp"
+                            android:textSize="@dimen/editText"/>
+
+                        <Spinner
+                            android:id="@+id/tipoHorarioID"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="15dp"
-                            android:hint="@string/nome_do_hor_rio"
                             android:textSize="@dimen/editText"
-                            android:inputType="textPersonName"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/tipo"
-                                android:layout_margin="15dp"
-                                android:paddingStart="5dp"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="0dp"
-                                android:paddingEnd="0dp"
-                                android:textSize="@dimen/editText"/>
-
-                            <Spinner
-                                android:id="@+id/tipoHorarioID"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="15dp"
-                                android:textSize="@dimen/editText"
-                                android:inputType="textEmailAddress"/>
-
-                        </LinearLayout>
-
-                        <EditText
-                            android:id="@+id/codigoHorarioID"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/editText"
-                            android:hint="@string/c_digo"
-                            android:layout_margin="15dp"
-                            android:inputType="textPersonName"/>
-
-                        <EditText
-                            android:id="@+id/localHorarioID"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/editText"
-                            android:hint="@string/local"
-                            android:layout_margin="15dp"
-                            android:inputType="text"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/horario"
-                                android:layout_margin="15dp"
-                                android:layout_marginEnd="0dp"
-                                android:layout_marginRight="0dp"
-                                android:paddingStart="5dp"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="0dp"
-                                android:paddingEnd="0dp"
-                                android:textSize="@dimen/editText"/>
-
-                            <Spinner
-                                android:id="@+id/horaHorarioID"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="15dp"
-                                android:layout_marginStart="0dp"
-                                android:layout_marginLeft="0dp"
-                                android:textSize="@dimen/editText"
-                                android:inputType="textEmailAddress"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/dia_da_semana"
-                                android:layout_margin="15dp"
-                                android:layout_marginEnd="0dp"
-                                android:layout_marginRight="0dp"
-                                android:paddingStart="5dp"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="0dp"
-                                android:paddingEnd="0dp"
-                                android:textSize="@dimen/editText"/>
-
-                            <Spinner
-                                android:id="@+id/diaSemanaHorarioID"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="15dp"
-                                android:layout_marginStart="0dp"
-                                android:layout_marginLeft="0dp"
-                                android:textSize="@dimen/editText"
-                                android:inputType="textEmailAddress"/>
+                            android:inputType="textEmailAddress"/>
 
                     </LinearLayout>
 
+                    <EditText
+                        android:id="@+id/codigoHorarioID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/editText"
+                        android:hint="@string/c_digo"
+                        android:layout_margin="15dp"
+                        android:inputType="textPersonName"/>
+
+                    <EditText
+                        android:id="@+id/localHorarioID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/editText"
+                        android:hint="@string/local"
+                        android:layout_margin="15dp"
+                        android:inputType="text"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/horario"
+                            android:layout_margin="15dp"
+                            android:layout_marginEnd="0dp"
+                            android:layout_marginRight="0dp"
+                            android:paddingStart="5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="0dp"
+                            android:paddingEnd="0dp"
+                            android:textSize="@dimen/editText"/>
+
+                        <Spinner
+                            android:id="@+id/horaHorarioID"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="15dp"
+                            android:layout_marginStart="0dp"
+                            android:layout_marginLeft="0dp"
+                            android:textSize="@dimen/editText"
+                            android:inputType="textEmailAddress"/>
+
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dia_da_semana"
+                            android:layout_margin="15dp"
+                            android:layout_marginEnd="0dp"
+                            android:layout_marginRight="0dp"
+                            android:paddingStart="5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="0dp"
+                            android:paddingEnd="0dp"
+                            android:textSize="@dimen/editText"/>
+
+                        <Spinner
+                            android:id="@+id/diaSemanaHorarioID"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="15dp"
+                            android:layout_marginStart="0dp"
+                            android:layout_marginLeft="0dp"
+                            android:textSize="@dimen/editText"
+                            android:inputType="textEmailAddress"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/erroCadastroID"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/holo_red_light"
-                    android:visibility="invisible"/>
+                    android:id="@+id/erroHorariosID"
+                    style="@style/mensagem_erro"
+                    android:text="@string/campos_preenchidos"/>
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
 
                     <Button
-                        android:id="@+id/botaoVoltarID"
+                        android:id="@+id/botaoVoltarHorarioID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="40dp"
                         android:layout_marginBottom="10dp"
+                        android:layout_marginTop="20dp"
                         android:text="@string/voltar"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="40dp" />
 
                     <Button
-                        android:id="@+id/botaoSalvarID"
+                        android:id="@+id/botaoSalvarHorarioID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="40dp"
                         android:layout_marginBottom="10dp"
+                        android:layout_marginTop="20dp"
                         android:text="@string/criar"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="40dp" />
                 </android.support.constraint.ConstraintLayout>
 
             </LinearLayout>

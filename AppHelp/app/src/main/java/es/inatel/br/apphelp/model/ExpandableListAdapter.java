@@ -1,8 +1,12 @@
 package es.inatel.br.apphelp.model;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.media.Image;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +22,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import es.inatel.br.apphelp.R;
+import es.inatel.br.apphelp.control.CriarHorarioActivity;
 
 /**
  * Created by felipe on 30/10/17.
@@ -25,7 +30,6 @@ import es.inatel.br.apphelp.R;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
-    private TextView titulo;
     private TextView nome;
     private TextView hora;
     private TextView local;
@@ -89,7 +93,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         ListaHorarios dias = getGroup(groupPosition);
 
-        titulo = (TextView) convertView.findViewById(R.id.cabecalhoID);
+        TextView titulo = (TextView) convertView.findViewById(R.id.cabecalhoID);
 
         titulo.setText(dias.getDiaDaSemana());
 
@@ -105,12 +109,26 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         final Horarios horarios = getChild(groupPosition, childPosition);
 
-        nome = (TextView) convertView.findViewById(R.id.viewHorarioNomeID);
-        hora = (TextView) convertView.findViewById(R.id.viewHorarioHoraID);
-        local = (TextView) convertView.findViewById(R.id.viewHorarioLocalID);
+        TextView nome = (TextView) convertView.findViewById(R.id.viewHorarioNomeID);
+        TextView hora = (TextView) convertView.findViewById(R.id.viewHorarioHoraID);
+        TextView local = (TextView) convertView.findViewById(R.id.viewHorarioLocalID);
 
-        remover = (ImageButton) convertView.findViewById(R.id.removerHorarioID);
-        editar = (ImageButton) convertView.findViewById(R.id.editarHorarioID);
+        ImageButton remover = (ImageButton) convertView.findViewById(R.id.removerHorarioID);
+        ImageButton editar = (ImageButton) convertView.findViewById(R.id.editarHorarioID);
+
+        editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editar(groupPosition, childPosition);
+            }
+        });
+
+        remover.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                remover(groupPosition, childPosition);
+            }
+        });
 
 
         hora.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
@@ -119,22 +137,52 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         hora.setText(horarios.getHora() + " - " + horarios.getTipo());
         nome.setText(horarios.getNome());
         local.setText("Local: " + horarios.getLocal());
-
-        remover.setVisibility(View.VISIBLE);
-        editar.setVisibility(View.VISIBLE);
-        remover.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listaDias.get(groupPosition).getHorarios().remove(childPosition);
-                //new HorariosDAO().removerHorarios();
-            }
-        });
-
         return convertView;
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    public void editar(int groupPosition, int childPosition){
+        Horarios horarios = getChild(groupPosition, childPosition);
+
+        String info[] = {horarios.getNome(), horarios.getCodigo(), horarios.getLocal(),
+                horarios.getDiaDaSemana(), horarios.getHora()};
+
+        Intent proximaPagina = new Intent(context, CriarHorarioActivity.class);
+        proximaPagina.putExtra("tipoUsuario", "Aluno");
+        proximaPagina.putExtra("info", info);
+        proximaPagina.putExtra("editar", true);
+
+        context.startActivity(proximaPagina);
+        ((Activity)context).finish();
+    }
+
+    public void remover(final int groupPosition, final int childPosition){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setTitle("Remover horário");
+        builder.setMessage("Confirmar remoção do horário?");
+        builder.setCancelable(false);
+
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String dia = getChild(groupPosition, childPosition).getDiaDaSemana();
+                String hora = getChild(groupPosition, childPosition).getHora();
+                new HorariosDAO(context).removerHorarios(dia, hora, true);
+            }
+        });
+
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        builder.create();
+        builder.show();
     }
 }
