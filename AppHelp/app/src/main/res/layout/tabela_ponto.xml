@@ -20,9 +20,6 @@
             android:text="Saída  "
             android:layout_weight="1"/>
 
-        <TextView
-            android:text="Duração"
-            android:layout_weight="1"/>
     </TableRow>
 
 </TableLayout>

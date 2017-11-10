@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -93,6 +95,12 @@ public class PerfilActivity extends AppCompatActivity {
 
     //Adiciona Listeners aos botoes e demais componentes da tela
     private void adicionaListeners() {
+
+        //Máscara para telefone (99) 99999-9999
+        SimpleMaskFormatter smf = new SimpleMaskFormatter("(NN) NNNNN-NNNN");
+        MaskTextWatcher mtw = new MaskTextWatcher(telefone, smf);
+        telefone.addTextChangedListener(mtw);
+
         botaoVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

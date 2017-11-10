@@ -13,6 +13,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -60,6 +62,7 @@ public class CadastroActivity extends AppCompatActivity{
 
         referenciaComponentes();
         adicionarListeners();
+
         dados();
        // limpar_campos();
     }
@@ -145,6 +148,11 @@ public class CadastroActivity extends AppCompatActivity{
 
     //Adiciona Listeners aos botoes e demais componentes da tela
     public void adicionarListeners(){
+
+        //Máscara para telefone (99) 99999-9999
+        SimpleMaskFormatter smf = new SimpleMaskFormatter("(NN) NNNNN-NNNN");
+        MaskTextWatcher mtw = new MaskTextWatcher(telefone, smf);
+        telefone.addTextChangedListener(mtw);
 
         botaoCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
