@@ -1,5 +1,7 @@
 package es.inatel.br.apphelp.model;
 
+import java.util.ArrayList;
+
 /**
  * Created by felipe on 27/09/17.
  */

@@ -30,13 +30,6 @@ import es.inatel.br.apphelp.control.CriarHorarioActivity;
 
 public class AdapterListaHorarios extends BaseExpandableListAdapter {
 
-    private TextView nome;
-    private TextView hora;
-    private TextView local;
-
-    private ImageButton remover;
-    private ImageButton editar;
-
     private Context context;
     private ArrayList<ListaHorarios> listaDias;
     private LayoutInflater inflater;

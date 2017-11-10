@@ -10,11 +10,15 @@
         android:layout_height="wrap_content">
 
         <TableRow>
-
             <TextView
-                android:id="@+id/nomeID"
-                android:text="Aluno  "
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="Aluno"
+                android:id="@+id/alunoAtividadeID"
+                android:textAlignment="center"/>
+        </TableRow>
+
+        <TableRow>
+
 
             <TextView
                 android:id="@+id/dataID"

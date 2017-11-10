@@ -8,6 +8,7 @@ public class Administrador extends Usuario {
     private String ocupacao;
     private String atividadeResponsavel;
 
+
     public String getOcupacao() {
         return ocupacao;
     }

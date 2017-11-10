@@ -9,9 +9,6 @@
 
     <TableRow>
         <TextView
-            android:text="Aluno  "
-            android:layout_weight="1"/>
-        <TextView
             android:text="Data  "
             android:layout_weight="1"/>
 
