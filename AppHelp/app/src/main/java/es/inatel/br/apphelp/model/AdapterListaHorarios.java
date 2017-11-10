@@ -28,7 +28,7 @@ import es.inatel.br.apphelp.control.CriarHorarioActivity;
  * Created by felipe on 30/10/17.
  */
 
-public class ExpandableListAdapter extends BaseExpandableListAdapter {
+public class AdapterListaHorarios extends BaseExpandableListAdapter {
 
     private TextView nome;
     private TextView hora;
@@ -41,7 +41,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private ArrayList<ListaHorarios> listaDias;
     private LayoutInflater inflater;
 
-    public ExpandableListAdapter(Context context, ArrayList<ListaHorarios> listaDias) {
+    public AdapterListaHorarios(Context context, ArrayList<ListaHorarios> listaDias) {
         this.context = context;
         this.listaDias = listaDias;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

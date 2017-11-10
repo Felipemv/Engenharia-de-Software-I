@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/viewAtividadeTipoID"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Tipo"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp" />
+
+    <TextView
+        android:id="@+id/viewAtividadeNumAlunosID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Número de Alunos"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="35dp"
+        android:layout_marginLeft="8dp" />
+
+    <TextView
+        android:id="@+id/viewAtividadeTempoObrigID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tempo Obrigatório: "
+        android:textSize="20dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="62dp" />
+
+    <TextView
+        android:id="@+id/viewAtividadeTempoCumpID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tempo Cumprido: "
+        android:textSize="20dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="89dp" />
+
+    <TextView
+        android:id="@+id/viewAtividadeAlunosID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alunos: "
+        android:textSize="20dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="116dp" />
+
+    <ImageButton
+        android:id="@+id/removerAtividadeID"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/editarAtividadeID"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/edit"
+        app:layout_constraintEnd_toStartOf="@+id/removerAtividadeID"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

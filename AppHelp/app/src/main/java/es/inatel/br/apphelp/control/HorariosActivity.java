@@ -1,17 +1,11 @@
 package es.inatel.br.apphelp.control;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.ImageButton;
-import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,17 +14,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import java.net.HttpRetryException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 
 import es.inatel.br.apphelp.R;
 import es.inatel.br.apphelp.model.BancoDeDados;
-import es.inatel.br.apphelp.model.ExpandableListAdapter;
+import es.inatel.br.apphelp.model.AdapterListaHorarios;
 import es.inatel.br.apphelp.model.Horarios;
-import es.inatel.br.apphelp.model.HorariosDAO;
 import es.inatel.br.apphelp.model.ListaHorarios;
 
 public class HorariosActivity extends AppCompatActivity{
@@ -49,7 +39,7 @@ public class HorariosActivity extends AppCompatActivity{
     private FirebaseAuth mAuth;
     private FirebaseUser user;
 
-    private ExpandableListAdapter listAdapter;
+    private AdapterListaHorarios listAdapter;
     private ExpandableListView expListView;
 
     @Override
@@ -109,7 +99,7 @@ public class HorariosActivity extends AppCompatActivity{
                     organizaLista(list);
 
                     expListView = (ExpandableListView) findViewById(R.id.lvExp);
-                    ExpandableListAdapter adapter = new ExpandableListAdapter(HorariosActivity.this, list);
+                    AdapterListaHorarios adapter = new AdapterListaHorarios(HorariosActivity.this, list);
                     expListView.setAdapter(adapter);
                 }
             }
