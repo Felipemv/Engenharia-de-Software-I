@@ -1,5 +1,7 @@
 package es.inatel.br.apphelp.control;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,11 +39,23 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         }
         referenciaComponentes();
         adicionarListeners();
-
-
+        modificaMenu();
     }
 
-    // Referencia os componentes da tela para serem usados
+    //Troca o menu para o tipo de usuario conectado
+    public void modificaMenu(){
+        if(tipoUsuario.equals("Administrador")){
+
+            menuHorario.setText("Atividades");
+            menuAtividade.setVisibility(View.GONE);
+
+        }else{
+            menuHorario.setText("Quadro de Horarios");
+            menuAtividade.setText("Relogio de Ponto");
+        }
+    }
+
+    //Referencia os componentes da tela para serem usados
     public void referenciaComponentes(){
         menuPerfil =        (Button) findViewById(R.id.menuPerfilID);
         menuHorario =       (Button) findViewById(R.id.menuHorarioID);
@@ -55,7 +69,8 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         menuPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent proximaTela = new Intent(MenuPrincipalActivity.this, PerfilActivity.class);
+                Intent proximaTela = new Intent(MenuPrincipalActivity.this,
+                        PerfilActivity.class);
                 proximaTela.putExtra("tipoUsuario", tipoUsuario);
                 startActivity(proximaTela);
                 finish();
@@ -65,7 +80,16 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         menuHorario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent proximaTela = new Intent(MenuPrincipalActivity.this, HorariosActivity.class);
+                Intent proximaTela;
+                if(tipoUsuario.equals("Aluno")){
+                    proximaTela = new Intent(MenuPrincipalActivity.this,
+                            HorariosActivity.class);
+
+                }else{
+                    proximaTela = new Intent(MenuPrincipalActivity.this,
+                            MostrarAtividadesActivity.class);
+                }
+
                 proximaTela.putExtra("tipoUsuario", tipoUsuario);
                 startActivity(proximaTela);
                 finish();
@@ -75,7 +99,8 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         menuAtividade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent proximaTela = new Intent(MenuPrincipalActivity.this, CriarAtividadeActivity.class);
+                Intent proximaTela = new Intent(MenuPrincipalActivity.this,
+                        MarcarPontoActivity.class);
                 startActivity(proximaTela);
                 finish();
             }

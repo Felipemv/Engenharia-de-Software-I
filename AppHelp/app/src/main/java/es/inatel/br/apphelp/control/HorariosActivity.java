@@ -163,6 +163,7 @@ public class HorariosActivity extends AppCompatActivity{
                 proximaTela.putExtra("tipoUsuario", tipoUsuario);
                 proximaTela.putExtra("editar", false);
                 startActivity(proximaTela);
+                finish();
             }
         });
 
@@ -174,6 +175,7 @@ public class HorariosActivity extends AppCompatActivity{
                 proximaTela.putExtra("tipoUsuario", tipoUsuario);
                 proximaTela.putExtra("editar", false);
                 startActivity(proximaTela);
+                finish();
             }
         });
 

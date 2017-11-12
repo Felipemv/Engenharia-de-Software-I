@@ -167,6 +167,7 @@ public class CadastroActivity extends AppCompatActivity{
                 Toast.makeText(CadastroActivity.this,"Retorno ao login com sucesso!",Toast.LENGTH_LONG).show();
                 Intent proximaTela = new Intent(CadastroActivity.this, LoginActivity.class);
                 startActivity(proximaTela);
+                finish();
             }
         });
 

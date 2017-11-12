@@ -1,7 +1,10 @@
 package es.inatel.br.apphelp.control;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -100,20 +103,29 @@ public class LoginActivity extends AppCompatActivity{
         botaoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int validacao = validaEntrada();
 
-                if(validacao == 0){
-                    erroLogin.setText("Os campos não foram preenchidos");
-                    erroLogin.setVisibility(View.VISIBLE);
+                ConnectivityManager cm = (ConnectivityManager) LoginActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo = cm.getActiveNetworkInfo();
 
-                }else if (validacao == -1){
-                    erroLogin.setText("Tipo de usuário não selecionado");
-                }else {
-                    try {
-                        login(emailLogin.getText().toString(), senhaLogin.getText().toString());
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                if(netInfo != null && netInfo.isConnected()){
+                    int validacao = validaEntrada();
+
+                    if(validacao == 0){
+                        erroLogin.setText("Os campos não foram preenchidos");
+                        erroLogin.setVisibility(View.VISIBLE);
+
+                    }else if (validacao == -1){
+                        erroLogin.setText("Tipo de usuário não selecionado");
+                    }else {
+                        try {
+                            login(emailLogin.getText().toString(), senhaLogin.getText().toString());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
+                }else{
+                        Toast.makeText(LoginActivity.this, "Impossivel conectar! Verifique sua conexao com a " +
+                                "internet", Toast.LENGTH_LONG).show();
                 }
             }
         });

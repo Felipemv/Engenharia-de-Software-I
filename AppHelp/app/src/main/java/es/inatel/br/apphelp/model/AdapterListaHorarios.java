@@ -109,6 +109,9 @@ public class AdapterListaHorarios extends BaseExpandableListAdapter {
         ImageButton remover = (ImageButton) convertView.findViewById(R.id.removerHorarioID);
         ImageButton editar = (ImageButton) convertView.findViewById(R.id.editarHorarioID);
 
+        editar.getBackground().setAlpha(0);
+        remover.getBackground().setAlpha(0);
+
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -19,7 +19,7 @@
         <activity android:name=".control.CadastroActivity" />
         <activity android:name=".control.MenuPrincipalActivity" />
         <activity android:name=".control.CriarAtividadeActivity" />
-        <activity android:name=".control.AtividadesActivity" />
+        <activity android:name=".control.MarcarPontoActivity" />
         <activity android:name=".control.PerfilActivity" />
         <activity android:name=".control.CriarHorarioActivity" />
         <activity android:name=".control.HorariosActivity" />

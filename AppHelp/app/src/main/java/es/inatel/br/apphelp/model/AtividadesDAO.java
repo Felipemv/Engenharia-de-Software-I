@@ -1,5 +1,10 @@
 package es.inatel.br.apphelp.model;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -9,36 +14,78 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.inatel.br.apphelp.control.MarcarPontoActivity;
+
 /**
  * Created by felipe on 26/10/17.
  */
 
 public class AtividadesDAO {
-    private final String CAMINHO_Aluno;
-    private final String CAMINHO_ADM;
-    private FirebaseAuth mAuth;
-    private DatabaseReference user;
+    private String caminho;
+    private String idAluno;
+    private String idAdm;
 
-    public AtividadesDAO(FirebaseAuth mAuth){
-        this.mAuth = mAuth;
-        CAMINHO_ADM = "Usuarios/Administrador/"+mAuth.getCurrentUser().getUid()+"Atividades";
-        CAMINHO_Aluno = "Usuarios/Aluno/"+mAuth.getCurrentUser().getUid()+"Horarios/Extras";
+    private boolean ok;
+
+    private Context context;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference database;
+    private DatabaseReference databaseAtividade;
+
+    public AtividadesDAO(String idAluno, Context context){
+        this.idAluno = idAluno;
+        this.context = context;
+
+        mAuth = FirebaseAuth.getInstance();
+        idAdm = mAuth.getCurrentUser().getUid();
+
+        caminho = "Usuarios/Administrador/"+idAdm+"/Atividades";
+
+        ok = false;
+
     }
 
-    public void criarAtividade(Atividades atividades){
-        user = new BancoDeDados().conexao(CAMINHO_ADM);
-        user.setValue(atividades);
+    public void criarAtividade(final Atividades atividades, final String aluno){
 
-        user = new BancoDeDados().conexao(CAMINHO_Aluno);
-        user.child(atividades.getNome()).setValue(atividades);
+        database = new BancoDeDados().conexao(caminho);
+
+        //Adiciona aluno na arvore de dados do adms
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot. hasChild(idAluno)){
+                    Toast.makeText(context, "Voce ja administra uma atividade desse aluno!",
+                            Toast.LENGTH_SHORT).show();
+                }else{
+                    database.child(idAluno).setValue(aluno);
+
+                    String caminhoAluno = "Usuarios/Aluno/"+idAluno+"/Atividades/"+idAdm;
+
+                    databaseAtividade = new BancoDeDados().conexao(caminhoAluno);
+                    databaseAtividade.setValue(atividades);
+
+                    Intent proximaPagina = new Intent(context, MarcarPontoActivity.class);
+                    context.startActivity(proximaPagina);
+                    ((Activity) context).finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(context, "Erro ao cadastrar atividade!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     public ArrayList<Atividades> listarAtividades(){
 
         List<Atividades> lista = new ArrayList<>();
 
-        user = new BancoDeDados().conexao(CAMINHO_ADM);
-        user.addValueEventListener(new ValueEventListener() {
+        //database = new BancoDeDados().conexao(CAMINHO_ADM);
+        database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //Cria o codigo pra listar todos os valores

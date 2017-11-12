@@ -13,7 +13,6 @@ public class Atividades {
     private String tipo;
     private String nome;
     private String tempo_mensal;
-    private int numero_de_alunos;
 
     public String getInicio() {
         return inicio;
@@ -55,11 +54,4 @@ public class Atividades {
         this.tempo_mensal = tempo_mensal;
     }
 
-    public int getNumero_de_alunos() {
-        return numero_de_alunos;
-    }
-
-    public void setNumero_de_alunos(int numero_de_alunos) {
-        this.numero_de_alunos = numero_de_alunos;
-    }
 }

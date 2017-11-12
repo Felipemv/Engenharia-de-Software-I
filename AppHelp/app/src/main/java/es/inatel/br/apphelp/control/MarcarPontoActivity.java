@@ -1,6 +1,5 @@
 package es.inatel.br.apphelp.control;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +8,7 @@ import android.widget.Toast;
 
 import es.inatel.br.apphelp.R;
 
-public class AtividadesActivity extends AppCompatActivity {
+public class MarcarPontoActivity extends AppCompatActivity {
 
     private Button botaoInicio;
     private Button botaoFim;
@@ -17,7 +16,7 @@ public class AtividadesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_atividades);
+        setContentView(R.layout.activity_marcar_ponto);
 
         referenciaComponentes();
         adicionarListeners();
@@ -39,7 +38,7 @@ public class AtividadesActivity extends AppCompatActivity {
         botaoInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AtividadesActivity.this, "Hora de entrada adicinada com sucesso!!", Toast.LENGTH_LONG).show();
+                Toast.makeText(MarcarPontoActivity.this, "Hora de entrada adicinada com sucesso!!", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -47,7 +46,7 @@ public class AtividadesActivity extends AppCompatActivity {
         botaoFim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AtividadesActivity.this, "Hora de saída adicinada com sucesso!!", Toast.LENGTH_LONG).show();
+                Toast.makeText(MarcarPontoActivity.this, "Hora de saída adicinada com sucesso!!", Toast.LENGTH_LONG).show();
             }
         });
     }
