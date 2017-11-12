@@ -58,7 +58,7 @@ public class AtividadesDAO {
                     Toast.makeText(context, "Voce ja administra uma atividade desse aluno!",
                             Toast.LENGTH_SHORT).show();
                 }else{
-                    database.child(idAluno).setValue(aluno);
+                    database.child(idAluno).setValue(atividades);
 
                     String caminhoAluno = "Usuarios/Aluno/"+idAluno+"/Atividades/"+idAdm;
 

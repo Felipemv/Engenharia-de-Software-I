@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/viewAtividadeTipoID"
@@ -13,67 +13,83 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Tipo"
+        android:text="Tipo:"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="8dp" />
 
     <TextView
-        android:id="@+id/viewAtividadeNumAlunosID"
+        android:id="@+id/viewAtividadeNomeID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Número de Alunos"
+        android:text="Nome da atividade:"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="35dp"
+        app:layout_constraintTop_toBottomOf="@+id/viewAtividadeTipoID"
         android:layout_marginLeft="8dp" />
 
     <TextView
         android:id="@+id/viewAtividadeTempoObrigID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="Tempo Obrigatório: "
         android:textSize="20dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="62dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewAtividadeNomeID"
+        android:layout_marginLeft="8dp" />
 
-    <TextView
-        android:id="@+id/viewAtividadeTempoCumpID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tempo Cumprido: "
-        android:textSize="20dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="89dp" />
 
     <TextView
         android:id="@+id/viewAtividadeAlunosID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Alunos: "
+        android:layout_marginStart="8dp"
+        android:text="Aluno: "
         android:textSize="20dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="116dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewAtividadeTempoObrigID"
+        android:layout_marginLeft="8dp" />
+
+    <ImageButton
+        android:id="@+id/listarTabelaAtividadesID"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/list"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editarAtividadeID"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.961"
+        android:layout_marginRight="8dp" />
 
     <ImageButton
         android:id="@+id/removerAtividadeID"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.961" />
 
     <ImageButton
         android:id="@+id/editarAtividadeID"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/edit"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/removerAtividadeID"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.961"
+        android:layout_marginRight="8dp" />
 </android.support.constraint.ConstraintLayout>

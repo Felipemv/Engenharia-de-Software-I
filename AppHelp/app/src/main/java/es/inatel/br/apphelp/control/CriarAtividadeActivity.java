@@ -197,7 +197,6 @@ public class CriarAtividadeActivity extends AppCompatActivity {
     private void carregarAlunos(){
 
         final ArrayAdapter<String> opcoesAluno = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        final ArrayList<String> alunoAux = new ArrayList<>();
         final HashMap<String, String> mapAux = new HashMap<>();
         database = new BancoDeDados().conexao("Usuarios/Aluno");
 
@@ -222,8 +221,6 @@ public class CriarAtividadeActivity extends AppCompatActivity {
                 Toast.makeText(CriarAtividadeActivity.this, "Erro ao carregar a lista " +
                         "de alunos!", Toast.LENGTH_LONG).show();
             }
-
-
         });
     }
 

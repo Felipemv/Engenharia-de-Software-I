@@ -43,6 +43,7 @@
                 android:layout_height="320dp">
 
                 <ListView
+                    android:id="@+id/listViewAtividades"
                     android:layout_width="match_parent"
                     android:layout_height="320dp">
 
@@ -56,11 +57,13 @@
 
             <TableRow>
                 <Button
-                    android:text="    Voltar    "
+                    android:id="@+id/voltarListAtivID"
+                    android:text="    Voltar     "
                     android:layout_weight="1"
                     android:layout_margin="20dp"/>
 
                 <Button
+                    android:id="@+id/botaoCriarAtivID"
                     android:text="Criar Atividade"
                     android:layout_weight="1"
                     android:layout_margin="20dp"/>

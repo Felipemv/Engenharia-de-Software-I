@@ -5,7 +5,7 @@
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="cabecalho">40sp</dimen>
+    <dimen name="cabecalho">36sp</dimen>
     <dimen name="largura_foto_perfil">140dp</dimen>
     <dimen name="altura_foto_perfil">120dp</dimen>
     <dimen name="editText">20sp</dimen>
