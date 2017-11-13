@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -106,7 +107,8 @@ public class HorariosActivity extends AppCompatActivity{
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Toast.makeText(HorariosActivity.this, "Erro ao carregar horários",
+                        Toast.LENGTH_LONG).show();
             }
         });
     }

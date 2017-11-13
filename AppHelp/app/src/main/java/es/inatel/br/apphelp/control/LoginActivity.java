@@ -151,12 +151,13 @@ public class LoginActivity extends AppCompatActivity{
 
     //Valores de teste para poupar tempo
     public void dados(){
-        emailLogin.setText("felipemartinsv@gmail.com");
-        senhaLogin.setText("felipe");
-        radioAdm.setChecked(true);
+        emailLogin.setText("felipe.martinsvitor@gmail.com");
+        senhaLogin.setText("101010");
+        radioAluno.setChecked(true);
 
+        /*
         mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword("felipemartinsv@gmail.com", "felipe").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword("felipe.martinsvitor@gmail.com", "101010").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 try {
@@ -166,14 +167,14 @@ public class LoginActivity extends AppCompatActivity{
                 }
                 if(task.isSuccessful()){
 
-                    Intent i = new Intent(LoginActivity.this, MostrarAtividadesActivity.class);
-                    i.putExtra("tipoUsuario", "Administrador");
+                    Intent i = new Intent(LoginActivity.this, MarcarPontoActivity.class);
+                    i.putExtra("tipoUsuario", "Aluno");
                     startActivity(i);
                     finish();
                 }
             }
         });
-
+*/
 
     }
 }

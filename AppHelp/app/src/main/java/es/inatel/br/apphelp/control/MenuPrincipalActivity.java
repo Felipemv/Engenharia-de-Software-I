@@ -101,6 +101,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent proximaTela = new Intent(MenuPrincipalActivity.this,
                         MarcarPontoActivity.class);
+                proximaTela.putExtra("tipoUsuario", tipoUsuario);
                 startActivity(proximaTela);
                 finish();
             }

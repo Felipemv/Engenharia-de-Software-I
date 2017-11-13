@@ -104,7 +104,7 @@ public class MostrarAtividadesActivity extends AppCompatActivity {
 
                     ativ.setTipo(ds.getValue(Atividades.class).getTipo());
                     ativ.setNome(ds.getValue(Atividades.class).getNome());
-                    ativ.setTempo_mensal(ds.getValue(Atividades.class).getTempo_mensal());
+                    ativ.setTempoMensal(ds.getValue(Atividades.class).getTempoMensal());
 
                     atividadesAux.add(ativ);
                     alunosAux.add(a);

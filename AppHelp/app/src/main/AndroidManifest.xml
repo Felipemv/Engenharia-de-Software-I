@@ -23,7 +23,7 @@
         <activity android:name=".control.PerfilActivity" />
         <activity android:name=".control.CriarHorarioActivity" />
         <activity android:name=".control.HorariosActivity" />
-        <activity android:name=".control.MostrarAtividadesActivity"></activity>
+        <activity android:name=".control.MostrarAtividadesActivity" />
     </application>
 
 </manifest>

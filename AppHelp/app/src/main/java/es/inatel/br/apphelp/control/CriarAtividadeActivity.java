@@ -138,6 +138,7 @@ public class CriarAtividadeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(CriarAtividadeActivity.this,"Retorno as atividades com sucesso!",Toast.LENGTH_LONG).show();
                 Intent proximaTela = new Intent(CriarAtividadeActivity.this, MostrarAtividadesActivity.class);
+                proximaTela.putExtra("tipoUsuario", "Administrador");
                 startActivity(proximaTela);
                 finish();
             }
@@ -230,7 +231,7 @@ public class CriarAtividadeActivity extends AppCompatActivity {
             String tipo = spinnerTipo.getSelectedItemPosition()+"-"+spinnerTipo.getSelectedItem().toString();
 
             atividades.setNome(nomeAtividade.getText().toString());
-            atividades.setTempo_mensal(tempo);
+            atividades.setTempoMensal(tempo);
             atividades.setTipo(tipo);
 
             new AtividadesDAO(idAluno, idAdm, CriarAtividadeActivity.this)
@@ -314,6 +315,6 @@ public class CriarAtividadeActivity extends AppCompatActivity {
         nomeAtividade.setText("Teste");
         spinnerTipo.setSelection(1);
         spinnerTempo.setSelection(1);
-        alunoSelecionado.setText("123 - Felipe Martins Vitor");
+        alunoSelecionado.setText("1147 - Felipe Martins Vitor");
     }
 }

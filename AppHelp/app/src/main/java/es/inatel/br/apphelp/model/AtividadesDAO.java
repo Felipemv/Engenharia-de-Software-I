@@ -89,7 +89,7 @@ public class AtividadesDAO {
             database.updateChildren(childUpdates);
 
             childUpdates.clear();
-            childUpdates.put(caminhoAluno+"tempo_mensal/", tempo);
+            childUpdates.put(caminhoAluno+"tempoMensal/", tempo);
             database.updateChildren(childUpdates);
 
             childUpdates.clear();
@@ -102,7 +102,7 @@ public class AtividadesDAO {
             database.updateChildren(childUpdates);
 
             childUpdates.clear();
-            childUpdates.put(caminhoAdmin+"tempo_mensal/", tempo);
+            childUpdates.put(caminhoAdmin+"tempoMensal/", tempo);
             database.updateChildren(childUpdates);
 
             childUpdates.clear();

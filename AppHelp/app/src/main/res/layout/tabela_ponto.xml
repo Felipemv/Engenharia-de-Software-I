@@ -9,14 +9,20 @@
 
     <TableRow>
         <TextView
+            android:textSize="25sp"
+            android:id="@+id/dataTabelaID"
             android:text="Data  "
             android:layout_weight="1"/>
 
         <TextView
+            android:textSize="25sp"
+            android:id="@+id/entradaTabelaID"
             android:text="Entrada"
             android:layout_weight="1"/>
 
         <TextView
+            android:textSize="25sp"
+            android:id="@+id/saidaTabelaID"
             android:text="Saída  "
             android:layout_weight="1"/>
 

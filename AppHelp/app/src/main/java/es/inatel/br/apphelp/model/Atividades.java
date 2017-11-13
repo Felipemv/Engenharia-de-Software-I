@@ -8,27 +8,10 @@ import java.util.ArrayList;
 
 public class Atividades {
 
-    private String inicio;
-    private String fim;
     private String tipo;
     private String nome;
-    private String tempo_mensal;
-
-    public String getInicio() {
-        return inicio;
-    }
-
-    public void setInicio(String inicio) {
-        this.inicio = inicio;
-    }
-
-    public String getFim() {
-        return fim;
-    }
-
-    public void setFim(String fim) {
-        this.fim = fim;
-    }
+    private String tempoMensal;
+    private String tempoCumprido;
 
     public String getTipo() {
         return tipo;
@@ -46,12 +29,19 @@ public class Atividades {
         this.nome = nome;
     }
 
-    public String getTempo_mensal() {
-        return tempo_mensal;
+    public String getTempoMensal() {
+        return tempoMensal;
     }
 
-    public void setTempo_mensal(String tempo_mensal) {
-        this.tempo_mensal = tempo_mensal;
+    public void setTempoMensal(String tempo_mensal) {
+        this.tempoMensal = tempo_mensal;
     }
 
+    public String getTempoCumprido() {
+        return tempoCumprido;
+    }
+
+    public void setTempoCumprido(String tempoCumprido) {
+        this.tempoCumprido = tempoCumprido;
+    }
 }

@@ -53,7 +53,7 @@ public class LoginDAO {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (!task.isSuccessful()){
-                    Toast.makeText(context, "Erro ao efetuar login!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Usuário, senha ou tipo de usuário incorretos!", Toast.LENGTH_SHORT).show();
                     mAuth.signOut();
                 }else{
 
@@ -77,7 +77,7 @@ public class LoginDAO {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if(!dataSnapshot.hasChild(mAuth.getCurrentUser().getUid())){
                         mAuth.signOut();
-                        Toast.makeText(context, "Erro ao efetuar login!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Usuário, senha ou tipo de usuário incorretos!", Toast.LENGTH_LONG).show();
                     }else{
                         Toast.makeText(context, "Login efetuado com sucesso!", Toast.LENGTH_LONG).show();
 

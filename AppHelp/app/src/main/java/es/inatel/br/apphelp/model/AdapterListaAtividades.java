@@ -28,6 +28,7 @@ import java.util.Set;
 
 import es.inatel.br.apphelp.R;
 import es.inatel.br.apphelp.control.CriarAtividadeActivity;
+import es.inatel.br.apphelp.control.MarcarPontoActivity;
 
 /**
  * Created by felipe on 09/11/17.
@@ -97,10 +98,37 @@ public class AdapterListaAtividades extends BaseAdapter{
             }
         });
 
+        listar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String caminho = "Usuarios/Aluno/"+listaAlunos.get(position)+"/nomeCompleto";
+                database = new BancoDeDados().conexao(caminho);
+                database.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Intent proximaPagina = new Intent(context, MarcarPontoActivity.class);
+                        proximaPagina.putExtra("tipoUsuario", "Administrador");
+
+                        proximaPagina.putExtra("nomeAluno", dataSnapshot.getValue().toString());
+                        context.startActivity(proximaPagina);
+                        ((Activity)context).finish();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(context, "Erro ao carregar planilha de pontos!", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+            }
+        });
+
         Atividades ativ = getItem(position);
 
         String type[] = ativ.getTipo().split("-");
-        String time[] = ativ.getTempo_mensal().split("-");
+        String time[] = ativ.getTempoMensal().split("-");
 
         tipo.setText(type[1]);
         nome.setText(ativ.getNome());
@@ -119,8 +147,6 @@ public class AdapterListaAtividades extends BaseAdapter{
                 Toast.makeText(context, "Erro ao carregar atividades!", Toast.LENGTH_LONG).show();
             }
         });
-        
-
 
         return convertView;
     }
@@ -133,10 +159,11 @@ public class AdapterListaAtividades extends BaseAdapter{
         String idAluno = listaAlunos.get(position);
         String idAdmin = mAuth.getCurrentUser().getUid();
 
-        String time[] = atividades.getTempo_mensal().split("-");
+        String time[] = atividades.getTempoMensal().split("-");
         String type[] = atividades.getTipo().split("-");
 
         Intent proximaPagina = new Intent(context, CriarAtividadeActivity.class);
+        proximaPagina.putExtra("tipoUsuario", "Administrador");
         proximaPagina.putExtra("editar", true);
         proximaPagina.putExtra("idAluno", idAluno);
         proximaPagina.putExtra("idAdmin", idAdmin);

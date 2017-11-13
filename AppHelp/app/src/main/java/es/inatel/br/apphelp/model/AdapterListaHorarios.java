@@ -5,21 +5,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.media.Image;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 import es.inatel.br.apphelp.R;
 import es.inatel.br.apphelp.control.CriarHorarioActivity;
@@ -81,7 +75,7 @@ public class AdapterListaHorarios extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
         if (convertView == null){
-            convertView = inflater.inflate(R.layout.cabecalho, null);
+            convertView = inflater.inflate(R.layout.cabecalho_horarios, null);
         }
 
         ListaHorarios dias = getGroup(groupPosition);
