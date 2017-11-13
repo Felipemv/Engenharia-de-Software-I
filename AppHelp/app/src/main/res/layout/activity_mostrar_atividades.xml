@@ -51,28 +51,31 @@
             </LinearLayout>
         </ScrollView>
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <TableRow>
-                <Button
-                    android:id="@+id/voltarListAtivID"
-                    android:text="    Voltar     "
-                    android:layout_weight="1"
-                    android:layout_margin="20dp"/>
-
-                <Button
-                    android:id="@+id/botaoCriarAtivID"
-                    android:text="Criar Atividade"
-                    android:layout_weight="1"
-                    android:layout_margin="20dp"/>
-            </TableRow>
-
-        </TableLayout>
 
     </LinearLayout>
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/voltarListAtivID"
+                android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:text="    Voltar     " />
+
+            <Button
+                android:id="@+id/botaoCriarAtivID"
+                android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:text="Criar Atividade" />
+        </TableRow>
+    </TableLayout>
 
 
 

@@ -12,43 +12,41 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import es.inatel.br.apphelp.control.MarcarPontoActivity;
+import es.inatel.br.apphelp.control.MostrarAtividadesActivity;
 
 /**
  * Created by felipe on 26/10/17.
  */
 
 public class AtividadesDAO {
-    private String caminho;
     private String idAluno;
-    private String idAdm;
-
-    private boolean ok;
+    private String idAdmin;
+    private String caminhoAluno;
+    private String caminhoAdmin;
 
     private Context context;
 
-    private FirebaseAuth mAuth;
     private DatabaseReference database;
     private DatabaseReference databaseAtividade;
 
-    public AtividadesDAO(String idAluno, Context context){
-        this.idAluno = idAluno;
+    public AtividadesDAO(String idAluno, String idAdmin, Context context){
         this.context = context;
 
-        mAuth = FirebaseAuth.getInstance();
-        idAdm = mAuth.getCurrentUser().getUid();
+        this.idAluno = idAluno;
+        this.idAdmin = idAdmin;
 
-        caminho = "Usuarios/Administrador/"+idAdm+"/Atividades";
-
-        ok = false;
-
+        this.caminhoAdmin = "Usuarios/Administrador/"+idAdmin+"/Atividades";
+        this.caminhoAluno = "Usuarios/Aluno/"+idAluno+"/Atividades";
     }
 
     public void criarAtividade(final Atividades atividades, final String aluno){
 
-        database = new BancoDeDados().conexao(caminho);
+        database = new BancoDeDados().conexao(caminhoAdmin);
 
         //Adiciona aluno na arvore de dados do adms
         database.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -60,12 +58,10 @@ public class AtividadesDAO {
                 }else{
                     database.child(idAluno).setValue(atividades);
 
-                    String caminhoAluno = "Usuarios/Aluno/"+idAluno+"/Atividades/"+idAdm;
-
                     databaseAtividade = new BancoDeDados().conexao(caminhoAluno);
-                    databaseAtividade.setValue(atividades);
+                    databaseAtividade.child(idAdmin).setValue(atividades);
 
-                    Intent proximaPagina = new Intent(context, MarcarPontoActivity.class);
+                    Intent proximaPagina = new Intent(context, MostrarAtividadesActivity.class);
                     context.startActivity(proximaPagina);
                     ((Activity) context).finish();
                 }
@@ -77,36 +73,71 @@ public class AtividadesDAO {
                         Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
-    public ArrayList<Atividades> listarAtividades(){
+    public void editarAtividade(String nome, String tempo, String tipo){
 
-        List<Atividades> lista = new ArrayList<>();
+        Map<String, Object> childUpdates = new HashMap<>();
 
-        //database = new BancoDeDados().conexao(CAMINHO_ADM);
-        database.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //Cria o codigo pra listar todos os valores
-            }
+        caminhoAluno = caminhoAluno+"/"+idAdmin+"/";
+        caminhoAdmin = caminhoAdmin+"/"+idAluno+"/";
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+        try{
+            //Atualiza dados na arvore do aluno
+            database = new BancoDeDados().conexao("");
+            childUpdates.put(caminhoAluno+"nome/", nome);
+            database.updateChildren(childUpdates);
 
-            }
-        });
+            childUpdates.clear();
+            childUpdates.put(caminhoAluno+"tempo_mensal/", tempo);
+            database.updateChildren(childUpdates);
 
-        return (ArrayList<Atividades>) lista;
+            childUpdates.clear();
+            childUpdates.put(caminhoAluno+"tipo/", tipo);
+            database.updateChildren(childUpdates);
+
+            //Atualiza dados na arvore do administrador
+            childUpdates.clear();
+            childUpdates.put(caminhoAdmin+"nome/", nome);
+            database.updateChildren(childUpdates);
+
+            childUpdates.clear();
+            childUpdates.put(caminhoAdmin+"tempo_mensal/", tempo);
+            database.updateChildren(childUpdates);
+
+            childUpdates.clear();
+            childUpdates.put(caminhoAdmin+"tipo/", tipo);
+            database.updateChildren(childUpdates);
+
+
+            Toast.makeText(context, "Atividade editada com sucesso!",
+                    Toast.LENGTH_SHORT).show();
+
+            Intent proximaPagina = new Intent(context, MostrarAtividadesActivity.class);
+            context.startActivity(proximaPagina);
+            ((Activity)context).finish();
+
+
+        }catch (Exception e){
+            Toast.makeText(context, "Erro ao editar atividade!",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public boolean editarAtividades(){
-        //Codigo para editar (UPDATE)
-        return true;
-    }
+    public void removerAtividades(){
+        try{
+            database = new BancoDeDados().conexao(caminhoAdmin);
+            database.child(idAluno).removeValue();
 
-    public boolean removerAtividades(){
-        //Codigo para remover
-        return false;
+            database = new BancoDeDados().conexao(caminhoAluno);
+            database.child(idAdmin).removeValue();
+
+            Toast.makeText(context, "Atividade removido com sucesso!",
+                        Toast.LENGTH_SHORT).show();
+
+        }catch (Exception e){
+            Toast.makeText(context, "Erro ao remover atividade!",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -2,6 +2,7 @@ package es.inatel.br.apphelp.control;
 
 import android.content.Intent;
 import android.media.Image;
+import android.support.annotation.DimenRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,9 +33,19 @@ import es.inatel.br.apphelp.model.BancoDeDados;
 
 public class CriarAtividadeActivity extends AppCompatActivity {
 
+    private Bundle bundle;
+
+    private boolean editar;
+    private ArrayList<String> listaAlunos;
+    private ArrayList<Atividades> listaAtividades;
+
     private String itemTipo[] = {"", "Iniciação Científica", "Estágio", "Monitoria"};
     private String itemTempo[] = {"", "48 horas","80 horas"};
-    private String[] itemAluno;
+    private String idAluno;
+    private String idAdmin;
+    private String nomeAtividadeEdit;
+    private int tempoAtividade;
+    private int tipoAtividade;
 
     private String tipoUsuario = "Administrador";
     private HashMap<String, String> map;
@@ -66,12 +77,58 @@ public class CriarAtividadeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_criar_atividade);
 
-
         referenciarComponentes();
         adicionarListeners();
         criarSpinners();
         carregarAlunos();
-        teste();
+
+        bundle = getIntent().getExtras();
+        if(bundle != null) {
+            if(bundle.containsKey("editar")){
+                editar = bundle.getBoolean("editar");
+
+                idAdmin = bundle.getString("idAdmin");
+                idAluno = bundle.getString("idAluno");
+
+                nomeAtividadeEdit = bundle.getString("nome");
+                tipoAtividade = Integer.parseInt(bundle.getString("tipo"));
+                tempoAtividade = Integer.parseInt(bundle.getString("tempo"));
+            }
+        }
+
+        if (editar){
+            habilitarEdicao();
+        }else{
+            teste();
+        }
+    }
+
+    //Organiza as informações para a edição da atividade selecionada
+    private void habilitarEdicao() {
+        nomeAtividade.setText(nomeAtividadeEdit);
+        spinnerTipo.setSelection(tipoAtividade);
+        spinnerTempo.setSelection(tempoAtividade);
+
+        database = new BancoDeDados().conexao("Usuarios/Aluno/"+idAluno);
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String nomeAluno = dataSnapshot.getValue(Aluno.class).getNomeCompleto();
+                int mat = dataSnapshot.getValue(Aluno.class).getMatricula();
+
+                alunoSelecionado.setText(Integer.toString(mat)+" - "+nomeAluno);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(CriarAtividadeActivity.this, "Erro ao carregar a lista " +
+                        "de alunos!", Toast.LENGTH_LONG).show();
+            }
+        });
+        autoComplete.setEnabled(false);
+        spinnerTipo.setEnabled(false);
+        botaoCriar.setText("Editar");
+        botaoVoltar.setText("Cancelar");
     }
 
     //Adiciona Listeners aos botoes e demais componentes da tela
@@ -79,8 +136,8 @@ public class CriarAtividadeActivity extends AppCompatActivity {
         botaoVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CriarAtividadeActivity.this,"Retorno ao Menu com sucesso!!",Toast.LENGTH_LONG).show();
-                Intent proximaTela = new Intent(CriarAtividadeActivity.this, MenuPrincipalActivity.class);
+                Toast.makeText(CriarAtividadeActivity.this,"Retorno as atividades com sucesso!",Toast.LENGTH_LONG).show();
+                Intent proximaTela = new Intent(CriarAtividadeActivity.this, MostrarAtividadesActivity.class);
                 startActivity(proximaTela);
                 finish();
             }
@@ -114,9 +171,34 @@ public class CriarAtividadeActivity extends AppCompatActivity {
         botaoCriar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                criarAtividade();
+                if(editar){
+                    editarAtividade();
+                }else{
+                    criarAtividade();
+                }
+
             }
         });
+    }
+
+    private void editarAtividade() {
+        if(validaEntrada() == -3){
+            erro.setText("Nome da atividade nao preenchido!");
+            erro.setVisibility(View.VISIBLE);
+        }else if(validaEntrada() == -1){
+            erro.setVisibility(View.VISIBLE);
+            erro.setText("Tempo obrigatorio nao selecionado!");
+        }else{
+            String caminhoAluno = "Usuarios/Aluno/"+idAluno+"Atividades/"+idAdmin;
+            String caminhoAdmin = "Usuarios/Administrador/"+idAdmin+"/Atividades/"+idAluno;
+
+            String tempo = spinnerTempo.getSelectedItemPosition()+"-"+spinnerTempo.getSelectedItem().toString();
+            String tipo = spinnerTipo.getSelectedItemPosition()+"-"+spinnerTipo.getSelectedItem().toString();
+
+            new AtividadesDAO(idAluno, idAdmin, CriarAtividadeActivity.this)
+                    .editarAtividade(nomeAtividade.getText().toString(), tempo, tipo);
+
+        }
     }
 
     //Junta as informaçoes para fazer o cadastro
@@ -144,11 +226,14 @@ public class CriarAtividadeActivity extends AppCompatActivity {
             final String idAluno = map.get(aluno);
             Atividades atividades = new Atividades();
 
-            atividades.setNome(nomeAtividade.getText().toString());
-            atividades.setTempo_mensal(spinnerTempo.getSelectedItem().toString());
-            atividades.setTipo(spinnerTipo.getSelectedItem().toString());
+            String tempo = spinnerTempo.getSelectedItemPosition()+"-"+spinnerTempo.getSelectedItem().toString();
+            String tipo = spinnerTipo.getSelectedItemPosition()+"-"+spinnerTipo.getSelectedItem().toString();
 
-            new AtividadesDAO(idAluno, CriarAtividadeActivity.this)
+            atividades.setNome(nomeAtividade.getText().toString());
+            atividades.setTempo_mensal(tempo);
+            atividades.setTipo(tipo);
+
+            new AtividadesDAO(idAluno, idAdm, CriarAtividadeActivity.this)
                     .criarAtividade(atividades, aluno);
 
         }

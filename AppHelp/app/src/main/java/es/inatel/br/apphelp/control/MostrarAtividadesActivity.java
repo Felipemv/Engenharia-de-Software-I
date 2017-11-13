@@ -34,7 +34,7 @@ public class MostrarAtividadesActivity extends AppCompatActivity {
     private Button criar;
     private ListView viewAtividades;
 
-    private HashMap<String, Atividades> map;
+    private ArrayList<Atividades> atividades;
     private ArrayList<String> alunos;
 
     private DatabaseReference database;
@@ -93,26 +93,26 @@ public class MostrarAtividadesActivity extends AppCompatActivity {
         String caminho = "Usuarios/Administrador/"+idAdm+"/Atividades";
 
         database = new BancoDeDados().conexao(caminho);
-        database.addListenerForSingleValueEvent(new ValueEventListener() {
+        database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                HashMap<String, Atividades> mapAux = new HashMap<>();
                 ArrayList<String> alunosAux = new ArrayList<>();
+                ArrayList<Atividades> atividadesAux = new ArrayList<>();
                 for (DataSnapshot ds : dataSnapshot.getChildren()){
                     String a = ds.getKey();
-                    Atividades atividadesAux = new Atividades();
+                    Atividades ativ = new Atividades();
 
-                    atividadesAux.setTipo(ds.getValue(Atividades.class).getTipo());
-                    atividadesAux.setNome(ds.getValue(Atividades.class).getNome());
-                    atividadesAux.setTempo_mensal(ds.getValue(Atividades.class).getTempo_mensal());
+                    ativ.setTipo(ds.getValue(Atividades.class).getTipo());
+                    ativ.setNome(ds.getValue(Atividades.class).getNome());
+                    ativ.setTempo_mensal(ds.getValue(Atividades.class).getTempo_mensal());
 
-                    mapAux.put(a,atividadesAux);
+                    atividadesAux.add(ativ);
                     alunosAux.add(a);
                 }
-                map = mapAux;
+                atividades = atividadesAux;
                 alunos = alunosAux;
                 viewAtividades = (ListView) findViewById(R.id.listViewAtividades);
-                AdapterListaAtividades adapter = new AdapterListaAtividades(MostrarAtividadesActivity.this, map, alunos);
+                AdapterListaAtividades adapter = new AdapterListaAtividades(MostrarAtividadesActivity.this, atividades, alunos);
                 viewAtividades.setAdapter(adapter);
             }
 
