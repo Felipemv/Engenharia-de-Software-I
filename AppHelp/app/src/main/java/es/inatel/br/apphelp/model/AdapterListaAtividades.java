@@ -83,6 +83,10 @@ public class AdapterListaAtividades extends BaseAdapter{
         ImageButton editar = (ImageButton) convertView.findViewById(R.id.editarAtividadeID);
         ImageButton remover = (ImageButton) convertView.findViewById(R.id.removerAtividadeID);
 
+        listar.getBackground().setAlpha(0);
+        editar.getBackground().setAlpha(0);
+        remover.getBackground().setAlpha(0);
+
         //Listeners dos botoes
         remover.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +136,7 @@ public class AdapterListaAtividades extends BaseAdapter{
 
         tipo.setText(type[1]);
         nome.setText(ativ.getNome());
-        tempo.setText("20/" + time[1]);
+        tempo.setText(time[1]);
 
         String caminho = "Usuarios/Aluno/" + listaAlunos.get(position);
         database = new BancoDeDados().conexao(caminho);

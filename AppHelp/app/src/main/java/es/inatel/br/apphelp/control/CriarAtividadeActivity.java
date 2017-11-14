@@ -39,7 +39,7 @@ public class CriarAtividadeActivity extends AppCompatActivity {
     private ArrayList<String> listaAlunos;
     private ArrayList<Atividades> listaAtividades;
 
-    private String itemTipo[] = {"", "Iniciação Científica", "Estágio", "Monitoria"};
+    private String itemTipo[] = {"", "Iniciação Científica", "Estágio"};
     private String itemTempo[] = {"", "48 horas","80 horas"};
     private String idAluno;
     private String idAdmin;
@@ -182,6 +182,7 @@ public class CriarAtividadeActivity extends AppCompatActivity {
         });
     }
 
+    //Junta as informações para fazer a edição
     private void editarAtividade() {
         if(validaEntrada() == -3){
             erro.setText("Nome da atividade nao preenchido!");

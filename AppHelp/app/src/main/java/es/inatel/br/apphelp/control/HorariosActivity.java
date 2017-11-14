@@ -86,8 +86,13 @@ public class HorariosActivity extends AppCompatActivity{
                             horarios = new Horarios();
 
                             horarios = ds1.getValue(Horarios.class);
+                            horarios.setDiaDaSemana(horarios.getDiaDaSemana());
+                            horarios.setTipo(horarios.getTipo());
+                            horarios.setHora(horarios.getHora());
+
+
                             h.add(horarios);
-                            nome = horarios.getDiaDaSemana();
+                            nome = horarios.getDiaDaSemana().split("--")[1];
                         }
 
                         ListaHorarios listaHorarios = new ListaHorarios();

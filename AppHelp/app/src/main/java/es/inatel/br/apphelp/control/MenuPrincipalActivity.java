@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+
 import es.inatel.br.apphelp.R;
 import es.inatel.br.apphelp.model.LoginDAO;
 
@@ -23,6 +26,8 @@ public class MenuPrincipalActivity extends AppCompatActivity {
     private Button menuAtividade;
     private Button menuSair;
 
+    private DatabaseReference database;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,11 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         referenciaComponentes();
         adicionarListeners();
         modificaMenu();
+        carregaCabecalho();
+    }
+
+    private void carregaCabecalho() {
+
     }
 
     //Troca o menu para o tipo de usuario conectado

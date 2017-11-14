@@ -61,7 +61,10 @@ public class AdapterPlanilhaHoras extends BaseAdapter {
         TextView entrada = (TextView) convertView.findViewById(R.id.entradaTabelaID);
         TextView saida = (TextView) convertView.findViewById(R.id.saidaTabelaID);
 
-        data.setText(point.getData().replace(":", "/"));
+        if(position == 0)data.setText(point.getData().replace(":", "/"));
+        else    data.setText(point.getData().replace(":", "/").substring(0,5));
+
+
         entrada.setText(point.getEntrada());
         saida.setText(point.getSaida());
 

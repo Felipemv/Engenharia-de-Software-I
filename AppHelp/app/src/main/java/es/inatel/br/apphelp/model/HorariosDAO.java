@@ -40,7 +40,7 @@ public class HorariosDAO {
 
     //Criar Horários no banco de dados
     public void criarHorarios(final Horarios horarios, String diaSemana){
-        database = new BancoDeDados().conexao(CAMINHO+diaSemana);
+        database = new BancoDeDados().conexao(CAMINHO+diaSemana.split("--")[1]);
 
         database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -80,8 +80,8 @@ public class HorariosDAO {
         String id = mAuth.getCurrentUser().getUid();
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("Usuarios/Aluno/"+id+"/Horarios/"+horarios.getDiaDaSemana()+"/"
-                        +horarios.getHora(),horarios);
+        childUpdates.put("Usuarios/Aluno/"+id+"/Horarios/"+horarios.getDiaDaSemana()
+                .split("--")[1]+"/"+horarios.getHora(),horarios);
 
         database = new BancoDeDados().conexao("");
 
@@ -101,7 +101,7 @@ public class HorariosDAO {
         database = new BancoDeDados().conexao(CAMINHO);
 
         try{
-            database.child(dia).child(horario).removeValue();
+            database.child(dia.split("--")[1]).child(horario).removeValue();
             if(remover){
                 Toast.makeText(context, "Horário removido com sucesso!",
                         Toast.LENGTH_SHORT).show();

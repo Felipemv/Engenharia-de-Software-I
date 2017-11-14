@@ -21,20 +21,16 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/fotoID"
-                        android:layout_width="140dp"
-                        android:layout_height="120dp"
-                        android:src="@drawable/boneco_perfil"/>
+                    android:layout_height="wrap_content">
 
                     <TextView
-                        android:layout_width="140dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Nome: "
-                        android:textSize="18sp"/>
+                        android:text="Bem vindo ao AppHelp"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/cabecalho"
+                        android:padding="10dp"/>
+
                 </LinearLayout>
 
 

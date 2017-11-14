@@ -124,7 +124,7 @@ public class AdapterListaHorarios extends BaseExpandableListAdapter {
         hora.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         hora.setAllCaps(true);
 
-        hora.setText(horarios.getHora() + " - " + horarios.getTipo());
+        hora.setText(horarios.getHora().split("--")[1] + " - " + horarios.getTipo().split("--")[1]);
         nome.setText(horarios.getNome());
         local.setText("Local: " + horarios.getLocal());
         return convertView;
@@ -139,7 +139,8 @@ public class AdapterListaHorarios extends BaseExpandableListAdapter {
         Horarios horarios = getChild(groupPosition, childPosition);
 
         String info[] = {horarios.getNome(), horarios.getCodigo(), horarios.getLocal(),
-                horarios.getDiaDaSemana(), horarios.getHora()};
+                horarios.getDiaDaSemana().split("--")[0], horarios.getHora().split("--")[0],
+                horarios.getTipo().split("--")[0]};
 
         Intent proximaPagina = new Intent(context, CriarHorarioActivity.class);
         proximaPagina.putExtra("tipoUsuario", "Aluno");

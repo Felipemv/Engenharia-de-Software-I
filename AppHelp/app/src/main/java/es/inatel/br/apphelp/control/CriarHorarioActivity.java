@@ -97,8 +97,10 @@ public class CriarHorarioActivity extends AppCompatActivity {
             codigo.setText(info[1]);
             local.setText(info[2]);
             criar.setText("Editar");
-            dia = info[3];
-            hora = info[4];
+            diaSemana.setSelection(Integer.parseInt(info[3]));
+            horario.setSelection(Integer.parseInt(info[4]));
+            tipo.setSelection(Integer.parseInt(info[5]));
+
         }else{
             cabecalho.setText("Criar Horário");
             criar.setText("Criar");
@@ -167,9 +169,13 @@ public class CriarHorarioActivity extends AppCompatActivity {
             horarios.setCodigo(codigo.getText().toString());
             horarios.setLocal(local.getText().toString());
 
-            horarios.setTipo(tipo.getSelectedItem().toString());
-            horarios.setHora(horario.getSelectedItem().toString());
-            horarios.setDiaDaSemana(diaSemana.getSelectedItem().toString());
+            String type = tipo.getSelectedItemPosition()+"--"+tipo.getSelectedItem().toString();
+            String hour = horario.getSelectedItemPosition()+"--"+horario.getSelectedItem().toString();
+            String day = diaSemana.getSelectedItemPosition()+"--"+diaSemana.getSelectedItem().toString();
+
+            horarios.setTipo(type);
+            horarios.setHora(hour);
+            horarios.setDiaDaSemana(day);
 
             new HorariosDAO(CriarHorarioActivity.this).criarHorarios(horarios, horarios.getDiaDaSemana());
 
@@ -187,11 +193,15 @@ public class CriarHorarioActivity extends AppCompatActivity {
             horarios.setCodigo(codigo.getText().toString());
             horarios.setLocal(local.getText().toString());
 
-            horarios.setTipo(tipo.getSelectedItem().toString());
-            horarios.setHora(horario.getSelectedItem().toString());
-            horarios.setDiaDaSemana(diaSemana.getSelectedItem().toString());
+            String type = tipo.getSelectedItemPosition()+"--"+tipo.getSelectedItem().toString();
+            String hour = horario.getSelectedItemPosition()+"--"+horario.getSelectedItem().toString();
+            String day = diaSemana.getSelectedItemPosition()+"--"+diaSemana.getSelectedItem().toString();
 
-            new HorariosDAO(CriarHorarioActivity.this).editarHorarios(horarios, dia, hora);
+            horarios.setTipo(type);
+            horarios.setHora(hour);
+            horarios.setDiaDaSemana(day);
+
+            new HorariosDAO(CriarHorarioActivity.this).editarHorarios(horarios, horarios.getDiaDaSemana(), horarios.getHora());
         }else{
             erro.setVisibility(View.VISIBLE);
         }

@@ -7,50 +7,23 @@
     tools:context="es.inatel.br.apphelp.control.CadastroActivity">
 
     <ScrollView
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:orientation="vertical">
 
-            <!--Cabecalho da tela-->
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Cadastro"
+                android:textAlignment="center"
+                android:textSize="@dimen/cabecalho"
+                android:padding="10dp"/>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="@dimen/largura_foto_perfil"
-                        android:layout_height="@dimen/altura_foto_perfil"
-                        android:src="@drawable/boneco_perfil" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Adicionar Foto"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="Cadastro"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/cabecalho" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

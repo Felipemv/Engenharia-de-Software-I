@@ -11,7 +11,6 @@ public class Atividades {
     private String tipo;
     private String nome;
     private String tempoMensal;
-    private String tempoCumprido;
 
     public String getTipo() {
         return tipo;
@@ -37,11 +36,4 @@ public class Atividades {
         this.tempoMensal = tempo_mensal;
     }
 
-    public String getTempoCumprido() {
-        return tempoCumprido;
-    }
-
-    public void setTempoCumprido(String tempoCumprido) {
-        this.tempoCumprido = tempoCumprido;
-    }
 }

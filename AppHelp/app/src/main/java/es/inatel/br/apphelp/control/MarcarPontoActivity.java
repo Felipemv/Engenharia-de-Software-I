@@ -21,6 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import es.inatel.br.apphelp.R;
 import es.inatel.br.apphelp.model.AdapterListaAtividades;
@@ -216,10 +218,21 @@ public class MarcarPontoActivity extends AppCompatActivity {
                     p.setEntrada(horario);
                     p.setSaida("-");
 
-                    database.child(key).child("Planilha").child(dataEntrada)
-                            .child("Ponto"+Long.toString(numPontos)).setValue(p);
+                    String novoCaminho = "Planilha/"+dataEntrada+"/Ponto"
+                            +Long.toString(numPontos-1)+"/saida";
 
-                    Toast.makeText(MarcarPontoActivity.this, "Início de atividade marcado!", Toast.LENGTH_LONG).show();
+                    if(ds.child(novoCaminho).getValue().toString().equals("-")){
+
+                        Toast.makeText(MarcarPontoActivity.this,
+                                "Erro!Há uma atividade não finalizada!", Toast.LENGTH_LONG).show();
+                    }else{
+                        database.child(key).child("Planilha").child(dataEntrada)
+                                .child("Ponto"+Long.toString(numPontos)).setValue(p);
+
+                        Toast.makeText(MarcarPontoActivity.this,
+                                "Início de atividade marcado!", Toast.LENGTH_LONG).show();
+                    }
+
 
                 }
             }
@@ -234,8 +247,50 @@ public class MarcarPontoActivity extends AppCompatActivity {
     }
 
     public void baterPontoSaida(){
-        Toast.makeText(MarcarPontoActivity.this,
-                "Hora de saída adicinada com sucesso!!", Toast.LENGTH_LONG).show();
+
+        final String horario = (String) relogio.getText();
+        final String dataSaida = data.getText().toString().replace("/", ":");
+        if(tipoUsuario.equals("Aluno")){
+            idAluno = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
+
+        final String caminho = "Usuarios/Aluno/"+idAluno+"/Atividades";
+
+        database = new BancoDeDados().conexao(caminho);
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds:dataSnapshot.getChildren()) {
+                    String key = ds.getKey();
+                    long numPontos = ds.child("Planilha").child(dataSaida).getChildrenCount();
+
+                    String novoCaminho = "Planilha/"+dataSaida+"/Ponto"+Long.toString(numPontos-1)+"/saida";
+
+                    if(ds.child(novoCaminho).getValue().toString().equals("-")){
+                        Map<String, Object> childUpdate = new HashMap<>();
+
+                        DatabaseReference db = new BancoDeDados().conexao("");
+                        childUpdate.put(caminho+"/"+key+"/"+novoCaminho, horario);
+                        db.updateChildren(childUpdate);
+
+                        Toast.makeText(MarcarPontoActivity.this,
+                                "Hora de saída adicinada com sucesso!!", Toast.LENGTH_LONG).show();
+
+                    }else{
+                        Toast.makeText(MarcarPontoActivity.this,
+                                "Erro! Nenhum horário iniciado!", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(MarcarPontoActivity.this,
+                        "Erro ao bater ponto de entrada", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
     }
 
 }
