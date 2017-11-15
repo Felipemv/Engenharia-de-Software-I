@@ -1,18 +1,20 @@
 package es.inatel.br.apphelp.control;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import es.inatel.br.apphelp.R;
+import es.inatel.br.apphelp.model.BancoDeDados;
 import es.inatel.br.apphelp.model.LoginDAO;
 
 public class MenuPrincipalActivity extends AppCompatActivity {
@@ -45,11 +47,6 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         referenciaComponentes();
         adicionarListeners();
         modificaMenu();
-        carregaCabecalho();
-    }
-
-    private void carregaCabecalho() {
-
     }
 
     //Troca o menu para o tipo de usuario conectado
@@ -107,15 +104,35 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         });
 
         menuAtividade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent proximaTela = new Intent(MenuPrincipalActivity.this,
-                        MarcarPontoActivity.class);
-                proximaTela.putExtra("tipoUsuario", tipoUsuario);
-                startActivity(proximaTela);
-                finish();
-            }
-        });
+                 @Override
+                 public void onClick(View v) {
+
+                     mAuth = FirebaseAuth.getInstance();
+                     String id = mAuth.getCurrentUser().getUid();
+
+                     database = new BancoDeDados().conexao("Usuarios/Aluno/" + id + "/Atividades");
+                     database.addListenerForSingleValueEvent(new ValueEventListener() {
+                         @Override
+                         public void onDataChange(DataSnapshot dataSnapshot) {
+                             if (dataSnapshot.getChildrenCount() == 0) {
+                                 Toast.makeText(MenuPrincipalActivity.this, "Você não " +
+                                         "participa de nenhuma atividade", Toast.LENGTH_SHORT).show();
+                             } else {
+                                 Intent proximaTela = new Intent(MenuPrincipalActivity.this,
+                                         MarcarPontoActivity.class);
+                                 proximaTela.putExtra("tipoUsuario", tipoUsuario);
+                                 startActivity(proximaTela);
+                                 finish();
+                             }
+                         }
+
+                         @Override
+                         public void onCancelled(DatabaseError databaseError) {
+
+                         }
+                     });
+                 }
+             });
 
         menuSair.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -42,6 +42,7 @@ public class LoginDAO {
         this.context = context;
     }
 
+    //Realiza a autenticação do usuario(Email/senha e tipo de usuario)
     public void autenticacao(String email, String senha, final String tipoUsuario){
 
         caminho = "Usuarios/" + tipoUsuario;
@@ -77,9 +78,9 @@ public class LoginDAO {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if(!dataSnapshot.hasChild(mAuth.getCurrentUser().getUid())){
                         mAuth.signOut();
-                        Toast.makeText(context, "Usuário, senha ou tipo de usuário incorretos!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Usuário ou senha incorretos!", Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(context, "Login efetuado com sucesso!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Login efetuado com sucesso!", Toast.LENGTH_SHORT).show();
 
                         Intent proximaPagina = new Intent(context, MenuPrincipalActivity.class);
                         proximaPagina.putExtra("tipoUsuario", tipoUsuario);
@@ -90,21 +91,22 @@ public class LoginDAO {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    Toast.makeText(context, "Erro ao efetuar login!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Erro ao efetuar login!", Toast.LENGTH_SHORT).show();
                 }
             });
         }else{
-            Toast.makeText(context, "Erro ao efetuar login!", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Erro ao efetuar login!", Toast.LENGTH_SHORT).show();
         }
 
     }
 
+    //Desconecta o usuário
     public void sair(){
         mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
 
         if(mAuth.getCurrentUser() == null){
-            Toast.makeText(context, "Logout feito com sucesso!!", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Logout feito com sucesso!!", Toast.LENGTH_SHORT).show();
         }
     }
 

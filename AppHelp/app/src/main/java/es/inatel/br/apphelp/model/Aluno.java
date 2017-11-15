@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Aluno extends Usuario {
     private String curso;
-    private int periodo;
+    private String periodo;
     private int matricula;
     private ArrayList<Atividades> atividades;
 
@@ -20,11 +20,11 @@ public class Aluno extends Usuario {
         this.curso = curso;
     }
 
-    public int getPeriodo() {
+    public String getPeriodo() {
         return periodo;
     }
 
-    public void setPeriodo(int periodo) {
+    public void setPeriodo(String periodo) {
         this.periodo = periodo;
     }
 

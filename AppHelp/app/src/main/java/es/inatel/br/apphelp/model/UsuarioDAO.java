@@ -3,8 +3,10 @@ package es.inatel.br.apphelp.model;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -63,33 +65,76 @@ public class UsuarioDAO {
                     context.startActivity(proximaPagina);
                     ((Activity)context).finish();
 
-                    Toast.makeText(context, "Usuário cadastrado com sucesso!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Usuário cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
 
                 }else{
-                    Toast.makeText(context, "Falha ao cadastrar usuário!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Falha ao cadastrar usuário!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     //Edita informações do perfil do usuário
-    public void editarPerfil(String uId){
-        database = new BancoDeDados().conexao("");
+    public void editarPerfil(final String uId){
 
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put(caminho + uId, usuario);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-        try {
-            database.updateChildren(childUpdates);
-            Toast.makeText(context, "Perfil atualizado com sucesso!", Toast.LENGTH_LONG).show();
+        builder.setTitle("Editar perfil");
+        builder.setMessage("Confirmar edição do perfil?");
+        builder.setCancelable(false);
 
-            Intent proximaPagina = new Intent(context, MenuPrincipalActivity.class);
-            proximaPagina.putExtra("tipoUsuario", tipoUsuario);
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                database = new BancoDeDados().conexao("");
 
-            context.startActivity(proximaPagina);
-            ((Activity)context).finish();
-        }catch (Exception e){
-            Toast.makeText(context, "Erro ao atualizar perfil!", Toast.LENGTH_LONG);
-        }
+                Map<String, Object> childUpdates = new HashMap<>();
+
+                childUpdates.put(caminho + uId+"/nomeCompleto", usuario.getNomeCompleto());
+                childUpdates.put(caminho + uId+"/email", usuario.getEmail());
+                childUpdates.put(caminho + uId+"/telefoneContato", usuario.getTelefoneContato());
+
+                if(tipoUsuario.equals("Aluno")){
+                    childUpdates.put(caminho + uId+"/curso", ((Aluno)usuario).getCurso());
+                    childUpdates.put(caminho + uId+"/periodo", ((Aluno)usuario).getPeriodo());
+                    childUpdates.put(caminho + uId+"/matricula", ((Aluno)usuario).getMatricula());
+                }else{
+                    childUpdates.put(caminho + uId+"/ocupacao", ((Administrador)usuario).getOcupacao());
+                    childUpdates.put(caminho + uId+"/atividadeResponsavel", ((Administrador)usuario).getAtividadeResponsavel());
+                }
+                try {
+
+                    database.updateChildren(childUpdates);
+                    Toast.makeText(context, "Perfil atualizado com sucesso!", Toast.LENGTH_LONG).show();
+
+                    Intent proximaPagina = new Intent(context, MenuPrincipalActivity.class);
+                    proximaPagina.putExtra("tipoUsuario", tipoUsuario);
+
+                    context.startActivity(proximaPagina);
+                    ((Activity)context).finish();
+                }catch (Exception e){
+                    Toast.makeText(context, "Erro ao atualizar perfil!", Toast.LENGTH_LONG);
+                }
+            }
+        });
+
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Toast.makeText(context, "Retornando ao menu!", Toast.LENGTH_LONG);
+
+                Intent proximaPagina = new Intent(context, MenuPrincipalActivity.class);
+                proximaPagina.putExtra("tipoUsuario", tipoUsuario);
+
+                context.startActivity(proximaPagina);
+                ((Activity)context).finish();
+            }
+        });
+
+        builder.create();
+        builder.show();
+
+
     }
 }

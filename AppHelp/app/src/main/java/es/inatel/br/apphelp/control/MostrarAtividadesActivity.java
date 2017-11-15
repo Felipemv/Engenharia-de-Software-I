@@ -1,12 +1,12 @@
 package es.inatel.br.apphelp.control;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,23 +15,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import es.inatel.br.apphelp.R;
 import es.inatel.br.apphelp.model.AdapterListaAtividades;
-import es.inatel.br.apphelp.model.AdapterListaHorarios;
 import es.inatel.br.apphelp.model.Atividades;
 import es.inatel.br.apphelp.model.BancoDeDados;
-import es.inatel.br.apphelp.model.Horarios;
-import es.inatel.br.apphelp.model.ListaHorarios;
 
 public class MostrarAtividadesActivity extends AppCompatActivity {
 
+    private TextView listAtivVazia;
+
     private Button voltar;
     private Button criar;
+
     private ListView viewAtividades;
 
     private ArrayList<Atividades> atividades;
@@ -52,10 +49,13 @@ public class MostrarAtividadesActivity extends AppCompatActivity {
 
     // Referencia os componentes da tela para serem usados
     public void referenciaComponentes(){
+        listAtivVazia = (TextView) findViewById(R.id.listaVaziaID);
+
         voltar = (Button) findViewById(R.id.voltarListAtivID);
         criar = (Button) findViewById(R.id.botaoCriarAtivID);
 
         viewAtividades = (ListView) findViewById(R.id.listViewAtividades);
+
     }
 
     //Adiciona Listeners aos botoes e demais componentes da tela
@@ -85,7 +85,7 @@ public class MostrarAtividadesActivity extends AppCompatActivity {
         });
     }
 
-
+    //Carrega a lista de atividades que será ,ostrada na tela
     public void carregarAtividades(){
         mAuth = FirebaseAuth.getInstance();
 
@@ -111,15 +111,25 @@ public class MostrarAtividadesActivity extends AppCompatActivity {
                 }
                 atividades = atividadesAux;
                 alunos = alunosAux;
-                viewAtividades = (ListView) findViewById(R.id.listViewAtividades);
-                AdapterListaAtividades adapter = new AdapterListaAtividades(MostrarAtividadesActivity.this, atividades, alunos);
-                viewAtividades.setAdapter(adapter);
+
+                if(atividades.size() == 0){
+                    listAtivVazia.setVisibility(View.VISIBLE);
+                    viewAtividades.setVisibility(View.GONE);
+                }else{
+                    listAtivVazia.setVisibility(View.GONE);
+                    viewAtividades.setVisibility(View.VISIBLE);
+
+                    viewAtividades = (ListView) findViewById(R.id.listViewAtividades);
+                    AdapterListaAtividades adapter = new AdapterListaAtividades(MostrarAtividadesActivity.this, atividades, alunos);
+                    viewAtividades.setAdapter(adapter);
+                }
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(MostrarAtividadesActivity.this, "Erro ao carregar " +
-                        "atividades!", Toast.LENGTH_LONG).show();
+                        "atividades!", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -47,25 +47,26 @@ public class HorariosDAO {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild(horarios.getHora())) {
                     Toast.makeText(context, "Atividade já cadastrada para esse horário!",
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_SHORT
+
+                    ).show();
                 }else{
                     database.child(horarios.getHora()).setValue(horarios);
                     Toast.makeText(context, "Atividade cadastrada com sucesso!",
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_SHORT).show();
 
                     Intent proximaPagina = new Intent(context, HorariosActivity.class);
                     proximaPagina.putExtra("tipoUsuario", "Aluno");
 
                     context.startActivity(proximaPagina);
                     ((Activity)context).finish();
-
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(context, "Erro ao cadastrar horário!",
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -86,7 +87,7 @@ public class HorariosDAO {
         database = new BancoDeDados().conexao("");
 
         database.updateChildren(childUpdates);
-        Toast.makeText(context, "Horário editado com sucesso!", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Horário editado com sucesso!", Toast.LENGTH_SHORT).show();
 
         Intent proximaPagina = new Intent(context, HorariosActivity.class);
         proximaPagina.putExtra("tipoUsuario", "Aluno");

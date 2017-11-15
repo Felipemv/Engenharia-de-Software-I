@@ -187,7 +187,7 @@ public class PerfilActivity extends AppCompatActivity {
                         email.setText(aluno.getEmail());
                         telefone.setText(aluno.getTelefoneContato());
                         curso.setText(aluno.getCurso());
-                        periodo.setText(Integer.toString(aluno.getPeriodo()));
+                        periodo.setText(aluno.getPeriodo());
                         matricula.setText(Integer.toString(aluno.getMatricula()));
                     }else{
                         Administrador adm = dataSnapshot.getValue(Administrador.class);
@@ -199,16 +199,16 @@ public class PerfilActivity extends AppCompatActivity {
                         atividadeResponsavel.setText(adm.getAtividadeResponsavel());
 
                     }
-                    Toast.makeText(PerfilActivity.this, "Perfil carregado com sucesso!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PerfilActivity.this, "Perfil carregado com sucesso!", Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(PerfilActivity.this, "Erro ao carregar perfil!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PerfilActivity.this, "Erro ao carregar perfil!", Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(PerfilActivity.this, "Erro ao carregar perfil!", Toast.LENGTH_LONG).show();
+                Toast.makeText(PerfilActivity.this, "Erro ao carregar perfil!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -222,7 +222,7 @@ public class PerfilActivity extends AppCompatActivity {
             aluno.setEmail(email.getText().toString());
             aluno.setTelefoneContato(telefone.getText().toString());
             aluno.setCurso(curso.getText().toString());
-            aluno.setPeriodo(Integer.parseInt(periodo.getText().toString()));
+            aluno.setPeriodo(periodo.getText().toString());
             aluno.setMatricula(Integer.parseInt(matricula.getText().toString()));
 
             new UsuarioDAO(aluno, PerfilActivity.this).editarPerfil(mAuth.getCurrentUser().getUid());

@@ -59,9 +59,7 @@ public class HorariosActivity extends AppCompatActivity{
 
         referenciaComponentes();
         adicionarListeners();
-
         carregarListas();
-
     }
 
     //Carrega as listas de horario do banco de dados
@@ -113,7 +111,7 @@ public class HorariosActivity extends AppCompatActivity{
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(HorariosActivity.this, "Erro ao carregar horários",
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

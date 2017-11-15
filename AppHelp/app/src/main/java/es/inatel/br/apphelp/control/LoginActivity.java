@@ -61,8 +61,6 @@ public class LoginActivity extends AppCompatActivity{
 
         referenciaComponentes();
         adicionaListeners();
-        dados();
-        //limpar_campo();
     }
 
     //Reune informações para realizar o login
@@ -125,16 +123,10 @@ public class LoginActivity extends AppCompatActivity{
                     }
                 }else{
                         Toast.makeText(LoginActivity.this, "Impossivel conectar! Verifique sua conexao com a " +
-                                "internet", Toast.LENGTH_LONG).show();
+                                "internet", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-    }
-
-    //Limpa todos os campos de entrada
-    public void limpar_campo(){
-        emailLogin.setText("");
-        senhaLogin.setText("");
     }
 
     //Faz a validação dos dados entrados pelo usuário
@@ -147,35 +139,6 @@ public class LoginActivity extends AppCompatActivity{
         if(!radioAluno.isChecked() && !radioAdm.isChecked()) return -1;
 
         return 1;
-    }
-
-    //Valores de teste para poupar tempo
-    public void dados(){
-        emailLogin.setText("felipe.martinsvitor@gmail.com");
-        senhaLogin.setText("101010");
-        radioAluno.setChecked(true);
-
-        /*
-        mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword("felipe.martinsvitor@gmail.com", "101010").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if(task.isSuccessful()){
-
-                    Intent i = new Intent(LoginActivity.this, MarcarPontoActivity.class);
-                    i.putExtra("tipoUsuario", "Aluno");
-                    startActivity(i);
-                    finish();
-                }
-            }
-        });
-*/
-
     }
 }
 

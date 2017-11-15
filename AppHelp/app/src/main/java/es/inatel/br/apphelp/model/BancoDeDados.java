@@ -15,6 +15,7 @@ public class BancoDeDados{
     private FirebaseDatabase dataBase;
     private DatabaseReference user;
 
+    //Realiza a conexão com o firebase no caminho especificado
     public DatabaseReference conexao(String caminho){
 
         dataBase = FirebaseDatabase.getInstance();

@@ -82,7 +82,7 @@ public class AdapterListaHorarios extends BaseExpandableListAdapter {
 
         TextView titulo = (TextView) convertView.findViewById(R.id.cabecalhoID);
 
-        titulo.setText(dias.getDiaDaSemana());
+        titulo.setText(dias.getDiaDaSemana()+" ("+getChildrenCount(groupPosition)+")");
 
         return convertView;
     }

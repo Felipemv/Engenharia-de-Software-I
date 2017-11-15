@@ -62,9 +62,6 @@ public class CadastroActivity extends AppCompatActivity{
 
         referenciaComponentes();
         adicionarListeners();
-
-        dados();
-       // limpar_campos();
     }
 
     //Prepara para o cadastro
@@ -74,8 +71,10 @@ public class CadastroActivity extends AppCompatActivity{
 
         if(validaEntrada() == -1){
             erroCadastro.setText("Tipo de usuário não selecionado!");
+            erroCadastro.setVisibility(View.VISIBLE);
         }else if (validaEntrada() == 0){
             erroCadastro.setText("Todos os campos devem ser preenchidos!");
+            erroCadastro.setVisibility(View.VISIBLE);
         }else{
             ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setMessage("Cadastrando usuário...");
@@ -88,7 +87,7 @@ public class CadastroActivity extends AppCompatActivity{
                 aluno.setNomeCompleto(nome.getText().toString());
                 aluno.setTelefoneContato(telefone.getText().toString());
                 aluno.setCurso(curso.getText().toString());
-                aluno.setPeriodo(Integer.parseInt(periodo.getText().toString()));
+                aluno.setPeriodo(periodo.getText().toString());
                 aluno.setMatricula(Integer.parseInt(matricula.getText().toString()));
 
                 mAuth = FirebaseAuth.getInstance();
@@ -164,7 +163,7 @@ public class CadastroActivity extends AppCompatActivity{
         botaoVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CadastroActivity.this,"Retorno ao login com sucesso!",Toast.LENGTH_LONG).show();
+                Toast.makeText(CadastroActivity.this,"Retorno ao login com sucesso!",Toast.LENGTH_SHORT).show();
                 Intent proximaTela = new Intent(CadastroActivity.this, LoginActivity.class);
                 startActivity(proximaTela);
                 finish();
@@ -211,32 +210,6 @@ public class CadastroActivity extends AppCompatActivity{
 
         ocupacao.setVisibility(View.GONE);
         atividadeResponsavel.setVisibility(View.GONE);
-    }
-
-    //Apaga todos os campos
-    private void limpar_campos(){
-        nome.setText("");
-        emailCadastro.setText("");
-        senhaCadastro.setText("");
-        confirmarSenhaCadastro.setText("");
-        telefone.setText("");
-        curso.setText("");
-        periodo.setText("");
-        matricula.setText("");
-        radioAluno.setChecked(true);
-    }
-
-    //Valores de teste para poupar tempo
-    public void dados(){
-        nome.setText("Felipe");
-        emailCadastro.setText("felipe.martinsvitor@gmail.com");
-        senhaCadastro.setText("101010");
-        confirmarSenhaCadastro.setText("101010");
-        telefone.setText("4324233");
-        curso.setText("GEC");
-        periodo.setText("6");
-        matricula.setText("123");
-        radioAluno.setChecked(true);
     }
 
     //Faz a validação dos dados entrados pelo usuário

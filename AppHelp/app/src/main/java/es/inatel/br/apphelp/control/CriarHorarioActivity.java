@@ -89,7 +89,6 @@ public class CriarHorarioActivity extends AppCompatActivity {
         referenciaComponentes();
         adicionarListener();
         criarSpinners();
-        teste();
 
         if(editar){
             cabecalho.setText("Editar Horário");
@@ -221,13 +220,4 @@ public class CriarHorarioActivity extends AppCompatActivity {
         return true;
     }
 
-    //Valores de entrada para facilitar os testes
-    private void teste(){
-        nome.setText("Ingles");
-        codigo.setText("123");
-        local.setText("Wizard");
-        tipo.setSelection(2);
-        horario.setSelection(5);
-        diaSemana.setSelection(2);
-    }
 }

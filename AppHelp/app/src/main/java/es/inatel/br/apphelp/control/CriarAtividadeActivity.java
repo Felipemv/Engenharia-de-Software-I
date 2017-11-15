@@ -1,10 +1,8 @@
 package es.inatel.br.apphelp.control;
 
 import android.content.Intent;
-import android.media.Image;
-import android.support.annotation.DimenRes;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -16,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -98,8 +95,6 @@ public class CriarAtividadeActivity extends AppCompatActivity {
 
         if (editar){
             habilitarEdicao();
-        }else{
-            teste();
         }
     }
 
@@ -122,7 +117,7 @@ public class CriarAtividadeActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(CriarAtividadeActivity.this, "Erro ao carregar a lista " +
-                        "de alunos!", Toast.LENGTH_LONG).show();
+                        "de alunos!", Toast.LENGTH_SHORT).show();
             }
         });
         autoComplete.setEnabled(false);
@@ -136,7 +131,7 @@ public class CriarAtividadeActivity extends AppCompatActivity {
         botaoVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CriarAtividadeActivity.this,"Retorno as atividades com sucesso!",Toast.LENGTH_LONG).show();
+                Toast.makeText(CriarAtividadeActivity.this,"Retorno as atividades com sucesso!",Toast.LENGTH_SHORT).show();
                 Intent proximaTela = new Intent(CriarAtividadeActivity.this, MostrarAtividadesActivity.class);
                 proximaTela.putExtra("tipoUsuario", "Administrador");
                 startActivity(proximaTela);
@@ -148,14 +143,14 @@ public class CriarAtividadeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(autoComplete.getText().toString().trim().equals("")){
-                    Toast.makeText(CriarAtividadeActivity.this, "Nenhum aluno selecionado", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CriarAtividadeActivity.this, "Nenhum aluno selecionado", Toast.LENGTH_SHORT).show();
                 }else{
                     String nome = autoComplete.getText().toString();
                     if(map.containsKey(nome)){
                         alunoSelecionado.setText(nome);
                         removerAluno.setVisibility(View.VISIBLE);
                     }else{
-                        Toast.makeText(CriarAtividadeActivity.this, "Aluno nao existente!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(CriarAtividadeActivity.this, "Aluno nao existente!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -292,12 +287,15 @@ public class CriarAtividadeActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 HashMap<String, String> mapAux = new HashMap<>();
                 for (DataSnapshot ds : dataSnapshot.getChildren()){
-                    Aluno a = ds.getValue(Aluno.class);
+                    Aluno a = new Aluno();
+                    a.setNomeCompleto(ds.child("nomeCompleto").getValue().toString());
+                    a.setMatricula(Integer.parseInt(ds.child("matricula").getValue().toString()));
 
                     String nome = a.getMatricula() + " - " + a.getNomeCompleto();
 
                     mapAux.put(nome, ds.getKey());
                     opcoesAluno.add(nome);
+
                 }
                 autoComplete.setAdapter(opcoesAluno);
                 map = mapAux;
@@ -306,16 +304,9 @@ public class CriarAtividadeActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(CriarAtividadeActivity.this, "Erro ao carregar a lista " +
-                        "de alunos!", Toast.LENGTH_LONG).show();
+                        "de alunos!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    //Valores de teste para poupar tempo
-    private void teste(){
-        nomeAtividade.setText("Teste");
-        spinnerTipo.setSelection(1);
-        spinnerTempo.setSelection(1);
-        alunoSelecionado.setText("1147 - Felipe Martins Vitor");
-    }
 }

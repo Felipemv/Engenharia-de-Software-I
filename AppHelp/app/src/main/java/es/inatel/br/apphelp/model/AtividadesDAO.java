@@ -44,6 +44,7 @@ public class AtividadesDAO {
         this.caminhoAluno = "Usuarios/Aluno/"+idAluno+"/Atividades";
     }
 
+    //Cria as atividades no banco de dados
     public void criarAtividade(final Atividades atividades, final String aluno){
 
         database = new BancoDeDados().conexao(caminhoAdmin);
@@ -75,6 +76,7 @@ public class AtividadesDAO {
         });
     }
 
+    //Edita as atividades no banco de dados
     public void editarAtividade(String nome, String tempo, String tipo){
 
         Map<String, Object> childUpdates = new HashMap<>();
@@ -124,6 +126,7 @@ public class AtividadesDAO {
         }
     }
 
+    //Remove as atividades no banco de dados
     public void removerAtividades(){
         try{
             database = new BancoDeDados().conexao(caminhoAdmin);

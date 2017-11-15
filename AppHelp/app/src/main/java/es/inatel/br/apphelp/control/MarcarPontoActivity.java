@@ -1,8 +1,8 @@
 package es.inatel.br.apphelp.control;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -16,20 +16,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import es.inatel.br.apphelp.R;
-import es.inatel.br.apphelp.model.AdapterListaAtividades;
 import es.inatel.br.apphelp.model.AdapterPlanilhaHoras;
-import es.inatel.br.apphelp.model.Atividades;
 import es.inatel.br.apphelp.model.BancoDeDados;
-import es.inatel.br.apphelp.model.Datas;
 import es.inatel.br.apphelp.model.Ponto;
 
 public class MarcarPontoActivity extends AppCompatActivity {
@@ -76,8 +71,13 @@ public class MarcarPontoActivity extends AppCompatActivity {
         carregarListaPontos();
     }
 
+    //Carrega a planilha de pontos
     private void carregarListaPontos() {
-        idAluno = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        if(tipoUsuario.equals("Aluno")){
+            idAluno = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
+
         String caminho = "Usuarios/Aluno/"+idAluno+"/Atividades";
 
         database = new BancoDeDados().conexao(caminho);
@@ -113,7 +113,7 @@ public class MarcarPontoActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(MarcarPontoActivity.this, "Erro ao carregar " +
-                        "atividades!", Toast.LENGTH_LONG).show();
+                        "atividades!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -193,6 +193,7 @@ public class MarcarPontoActivity extends AppCompatActivity {
 
     }
 
+    //Marcar inicio de atividade
     public void baterPontoEntrada(){
         final String horario = (String) relogio.getText();
         final String dataEntrada = data.getText().toString().replace("/", ":");
@@ -221,31 +222,38 @@ public class MarcarPontoActivity extends AppCompatActivity {
                     String novoCaminho = "Planilha/"+dataEntrada+"/Ponto"
                             +Long.toString(numPontos-1)+"/saida";
 
-                    if(ds.child(novoCaminho).getValue().toString().equals("-")){
-
-                        Toast.makeText(MarcarPontoActivity.this,
-                                "Erro!Há uma atividade não finalizada!", Toast.LENGTH_LONG).show();
-                    }else{
+                    if(numPontos == 0){
                         database.child(key).child("Planilha").child(dataEntrada)
-                                .child("Ponto"+Long.toString(numPontos)).setValue(p);
+                                .child("Ponto" + Long.toString(numPontos)).setValue(p);
 
                         Toast.makeText(MarcarPontoActivity.this,
-                                "Início de atividade marcado!", Toast.LENGTH_LONG).show();
+                                "Início de atividade marcado!", Toast.LENGTH_SHORT).show();
+
+                    }else{
+                        if(ds.child(novoCaminho).getValue().toString().equals("-")) {
+                            Toast.makeText(MarcarPontoActivity.this,
+                                    "Erro!Há uma atividade não finalizada!", Toast.LENGTH_SHORT).show();
+                        }else{
+                            database.child(key).child("Planilha").child(dataEntrada)
+                                    .child("Ponto" + Long.toString(numPontos)).setValue(p);
+
+                            Toast.makeText(MarcarPontoActivity.this,
+                                    "Início de atividade marcado!", Toast.LENGTH_SHORT).show();
+                        }
                     }
-
-
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(MarcarPontoActivity.this, "Erro ao bater ponto de entrada", Toast.LENGTH_LONG).show();
+                Toast.makeText(MarcarPontoActivity.this, "Erro ao bater ponto de entrada", Toast.LENGTH_SHORT).show();
             }
         });
 
 
     }
 
+    //Marcar término de atividade
     public void baterPontoSaida(){
 
         final String horario = (String) relogio.getText();
@@ -266,7 +274,9 @@ public class MarcarPontoActivity extends AppCompatActivity {
 
                     String novoCaminho = "Planilha/"+dataSaida+"/Ponto"+Long.toString(numPontos-1)+"/saida";
 
-                    if(ds.child(novoCaminho).getValue().toString().equals("-")){
+
+                    if(ds.child(novoCaminho).getValue() != null
+                            && ds.child(novoCaminho).getValue().toString().equals("-") ){
                         Map<String, Object> childUpdate = new HashMap<>();
 
                         DatabaseReference db = new BancoDeDados().conexao("");
@@ -274,11 +284,11 @@ public class MarcarPontoActivity extends AppCompatActivity {
                         db.updateChildren(childUpdate);
 
                         Toast.makeText(MarcarPontoActivity.this,
-                                "Hora de saída adicinada com sucesso!!", Toast.LENGTH_LONG).show();
+                                "Hora de saída adicinada com sucesso!!", Toast.LENGTH_SHORT).show();
 
                     }else{
                         Toast.makeText(MarcarPontoActivity.this,
-                                "Erro! Nenhum horário iniciado!", Toast.LENGTH_LONG).show();
+                                "Erro! Nenhum horário iniciado!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -286,7 +296,7 @@ public class MarcarPontoActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(MarcarPontoActivity.this,
-                        "Erro ao bater ponto de entrada", Toast.LENGTH_LONG).show();
+                        "Erro ao bater ponto de entrada", Toast.LENGTH_SHORT).show();
             }
         });
 

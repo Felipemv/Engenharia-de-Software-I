@@ -113,6 +113,7 @@ public class AdapterListaAtividades extends BaseAdapter{
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Intent proximaPagina = new Intent(context, MarcarPontoActivity.class);
                         proximaPagina.putExtra("tipoUsuario", "Administrador");
+                        proximaPagina.putExtra("idAluno", listaAlunos.get(position));
 
                         proximaPagina.putExtra("nomeAluno", dataSnapshot.getValue().toString());
                         context.startActivity(proximaPagina);
@@ -121,7 +122,7 @@ public class AdapterListaAtividades extends BaseAdapter{
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Toast.makeText(context, "Erro ao carregar planilha de pontos!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Erro ao carregar planilha de pontos!", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -148,7 +149,7 @@ public class AdapterListaAtividades extends BaseAdapter{
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(context, "Erro ao carregar atividades!", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Erro ao carregar atividades!", Toast.LENGTH_SHORT).show();
             }
         });
 
